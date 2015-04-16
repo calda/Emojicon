@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44E52F0A1ADFE9E500237ADD /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E52F091ADFE9E500237ADD /* EmojiCell.swift */; };
 		44F46F731ADD3DEB00F46BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F46F721ADD3DEB00F46BA2 /* AppDelegate.swift */; };
 		44F46F751ADD3DEB00F46BA2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F46F741ADD3DEB00F46BA2 /* ViewController.swift */; };
 		44F46F781ADD3DEB00F46BA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44F46F761ADD3DEB00F46BA2 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		44E52F091ADFE9E500237ADD /* EmojiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
 		44F46F6D1ADD3DEB00F46BA2 /* Emoji Playlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Emoji Playlist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44F46F711ADD3DEB00F46BA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44F46F721ADD3DEB00F46BA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				44F46F791ADD3DEB00F46BA2 /* Images.xcassets */,
 				44F46F7B1ADD3DEB00F46BA2 /* LaunchScreen.xib */,
 				44F46F701ADD3DEB00F46BA2 /* Supporting Files */,
+				44E52F091ADFE9E500237ADD /* EmojiCell.swift */,
 			);
 			path = "Emoji Playlist";
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E52F0A1ADFE9E500237ADD /* EmojiCell.swift in Sources */,
 				44F46F751ADD3DEB00F46BA2 /* ViewController.swift in Sources */,
 				44F46F731ADD3DEB00F46BA2 /* AppDelegate.swift in Sources */,
 			);
@@ -337,6 +341,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Emoji Playlist/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -347,6 +352,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Emoji Playlist/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -405,6 +411,7 @@
 				44F46F8E1ADD3DEB00F46BA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		44F46F8F1ADD3DEB00F46BA2 /* Build configuration list for PBXNativeTarget "Emoji PlaylistTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +420,7 @@
 				44F46F911ADD3DEB00F46BA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
