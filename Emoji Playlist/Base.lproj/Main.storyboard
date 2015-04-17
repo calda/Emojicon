@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D105g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -56,18 +56,22 @@
                                                         <constraint firstAttribute="centerX" secondItem="TyO-Hp-k5w" secondAttribute="centerX" id="mB3-GG-auk"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jW-X4-skc">
-                                                    <rect key="frame" x="345" y="19" width="22" height="22"/>
-                                                    <connections>
-                                                        <action selector="saveButton:" destination="gvJ-jn-73m" eventType="touchUpInside" id="w13-Qu-Oh1"/>
-                                                    </connections>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emoji Name Goes Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATH-E8-M10">
                                                     <rect key="frame" x="67" y="0.0" width="172" height="59"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jW-X4-skc">
+                                                    <rect key="frame" x="345" y="19" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="9jW-X4-skc" secondAttribute="height" multiplier="1:1" id="ox2-LY-hpq"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.29223653674125671" green="0.64560288190841675" blue="0.63964658975601196" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="saveButton:" destination="gvJ-jn-73m" eventType="touchUpInside" id="w13-Qu-Oh1"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ATH-E8-M10" firstAttribute="top" secondItem="sJX-tg-tSw" secondAttribute="top" id="16f-d4-VPS"/>
@@ -75,7 +79,7 @@
                                                 <constraint firstItem="8s1-jl-7BR" firstAttribute="top" secondItem="sJX-tg-tSw" secondAttribute="top" constant="5" id="3sn-i5-wmc"/>
                                                 <constraint firstAttribute="centerY" secondItem="9jW-X4-skc" secondAttribute="centerY" id="5ag-SJ-If6"/>
                                                 <constraint firstItem="ATH-E8-M10" firstAttribute="leading" secondItem="8s1-jl-7BR" secondAttribute="trailing" constant="10" id="BIH-Hj-EDe"/>
-                                                <constraint firstItem="9jW-X4-skc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ATH-E8-M10" secondAttribute="trailing" constant="5" id="KRu-w4-3J2"/>
+                                                <constraint firstItem="9jW-X4-skc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ATH-E8-M10" secondAttribute="trailing" priority="999" constant="5" id="KRu-w4-3J2"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="9jW-X4-skc" secondAttribute="trailing" id="bUq-6I-KCl"/>
                                                 <constraint firstItem="8s1-jl-7BR" firstAttribute="leading" secondItem="sJX-tg-tSw" secondAttribute="leadingMargin" id="fnV-H5-EzT"/>
                                                 <constraint firstAttribute="bottom" secondItem="8s1-jl-7BR" secondAttribute="bottom" constant="5" id="owg-oe-Mcz"/>

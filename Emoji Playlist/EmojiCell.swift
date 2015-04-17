@@ -24,18 +24,23 @@ class EmojiCell : UITableViewCell {
         
         var emojiName = ""
         
-        if (emoji as NSString).length == 1 { //is regular letter
-            emojiName = emoji
+        
+        let cfstring = NSMutableString(string: emoji) as CFMutableString
+        var range = CFRangeMake(0, CFStringGetLength(cfstring))
+        CFStringTransform(cfstring, &range, kCFStringTransformToUnicodeName, 0)
+        let capitalName = "\(cfstring)"
+        
+        if !capitalName.hasPrefix("\\") { //is number emoji
+            var splits = split(capitalName){ $0 == "\\" }
+            emojiName = ((capitalName as NSString).length > 1 ? "keycap " : "") + splits[0]
         }
         
-        else { //is emoji of some sort
-            let cfstring = NSMutableString(string: emoji) as CFMutableString
-            var range = CFRangeMake(0, CFStringGetLength(cfstring))
-            CFStringTransform(cfstring, &range, kCFStringTransformToUnicodeName, 0)
-            let capitalName = "\(cfstring)"
+        else {
             var splits = split(capitalName){ $0 == "}" }
             for i in 0..<splits.count {
-                splits[i] = (splits[i] as NSString).substringFromIndex(3).lowercaseString
+                if (splits[i] as NSString).length > 3 {
+                    splits[i] = (splits[i] as NSString).substringFromIndex(3).lowercaseString
+                }
             }
             
             if splits.count == 1 {
@@ -43,11 +48,9 @@ class EmojiCell : UITableViewCell {
             }
             
             if splits.count == 2{
-                
                 if splits[1].hasPrefix("emoji modifier") || splits[1].hasPrefix("variation selector"){ //skin tone emojis
                     emojiName = splits[0]
                 }
-                    
                 else { //flags are awful
                     var flagName = ""
                     for split in splits {
@@ -57,7 +60,6 @@ class EmojiCell : UITableViewCell {
                     emojiName = flagName + " flag"
                 }
             }
-            
         }
         
         nameLabel.text = emojiName
