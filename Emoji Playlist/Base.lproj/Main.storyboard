@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D105g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -97,6 +97,7 @@
                                             <outlet property="emojiDisplay" destination="TyO-Hp-k5w" id="e2v-fP-Edz"/>
                                             <outlet property="labelContainer" destination="8s1-jl-7BR" id="z5g-rO-pil"/>
                                             <outlet property="nameLabel" destination="ATH-E8-M10" id="TMs-dc-nQr"/>
+                                            <outlet property="saveButton" destination="9jW-X4-skc" id="tGD-OI-jNo"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -120,7 +121,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="hiddenField" destination="eMG-TM-eUO" id="fhu-0f-d3g"/>
-                        <outlet property="tableView" destination="cGL-ti-PwL" id="TgV-fy-fPk"/>
+                        <outlet property="tableView" destination="cGL-ti-PwL" id="hHv-wt-CuD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

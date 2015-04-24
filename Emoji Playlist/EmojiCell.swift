@@ -14,6 +14,7 @@ class EmojiCell : UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emojiDisplay: UILabel!
     @IBOutlet weak var labelContainer: UIView!
+    @IBOutlet weak var saveButton: UIButton!
     
     @IBAction func saveButton(sender: AnyObject) {
         println(nameLabel.text!)
@@ -66,6 +67,19 @@ class EmojiCell : UITableViewCell {
         
         labelContainer.layer.borderWidth = 0.5
         labelContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        saveButton.hidden = false
+        saveButton.enabled = true
+    }
+    
+    
+    func decorateCell(#emoji: String, text: String) {
+        nameLabel.text = text
+        emojiDisplay.text = emoji
+        
+        labelContainer.layer.borderWidth = 0.5
+        labelContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        saveButton.hidden = true
+        saveButton.enabled = false
     }
     
 }
