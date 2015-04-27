@@ -11,9 +11,11 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var emojis : [String] = []
+    var savedCells : [Int] = []
+    
     let about : [(emoji: String, text: String)] = [
         ("🌐", "1️⃣ open emoji keyboard"),
-        ("👈🏻", "2️⃣ type emoji"),
+        ("👇🏻", "2️⃣ type emoji"),
         ("📲", "3️⃣ save to camera roll"),
         ("🎧", "4️⃣ set as playlist icon"),
         ("🙏🏻", "5️⃣ nice!")
@@ -93,6 +95,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         sender.text = ""
     }
     
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("emojiCell") as! EmojiCell
         
@@ -107,6 +110,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return cell
     }
+    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60

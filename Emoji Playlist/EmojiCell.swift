@@ -16,15 +16,29 @@ class EmojiCell : UITableViewCell {
     @IBOutlet weak var labelContainer: UIView!
     @IBOutlet weak var saveButton: UIButton!
     
+    @IBOutlet weak var savedDisplay: UIView!
+    @IBOutlet weak var savedLeading: NSLayoutConstraint!
+
+    
     @IBAction func saveButton(sender: AnyObject) {
-        println(nameLabel.text!)
+        savedLeading.constant = 0
+        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+                self.layoutIfNeeded()
+            }, completion: { success in
+                self.savedLeading.constant = -375
+                UIView.animateWithDuration(1.0, delay: 1.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+                        self.layoutIfNeeded()
+                    self.savedDisplay.alpha = 0.0
+                    }, completion: { success in
+                        self.savedLeading.constant = 375
+                        self.layoutIfNeeded()
+                        self.savedDisplay.alpha = 1.0
+                })
+        })
     }
     
     func decorateCell(emoji: String) {
-        emojiDisplay.text = emoji
-        
         var emojiName = ""
-        
         
         let cfstring = NSMutableString(string: emoji) as CFMutableString
         var range = CFRangeMake(0, CFStringGetLength(cfstring))
@@ -63,10 +77,7 @@ class EmojiCell : UITableViewCell {
             }
         }
         
-        nameLabel.text = emojiName
-        
-        labelContainer.layer.borderWidth = 0.5
-        labelContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
+        decorateCell(emoji: emoji, text: emojiName)
         saveButton.hidden = false
         saveButton.enabled = true
     }
@@ -80,6 +91,11 @@ class EmojiCell : UITableViewCell {
         labelContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
         saveButton.hidden = true
         saveButton.enabled = false
+        
+        savedLeading.constant = 375
+        
+        setNeedsLayout()
+        setNeedsDisplay()
     }
     
 }
