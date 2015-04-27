@@ -8,6 +8,8 @@
 
 import UIKit
 
+let SHOW_HELP_POPUP = "SHOW_HELP_POPUP"
+
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var emojis : [String] = []
@@ -35,6 +37,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: SHOW_HELP_POPUP, object: nil)
     }
     
     func keyboardChanged(notification: NSNotification) {
@@ -59,6 +62,27 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         })
     }
     
+    func showHelpPopup() {
+        let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") as! UIViewController
+        
+        let nav = UINavigationController(rootViewController: popup)
+        //nav.navigationBar.backgroundColor = self.view.backgroundColor
+        popup.view.frame = CGRectMake(0, 0, -44, self.view.bounds.size.height)
+        
+        let closeButton = UIBarButtonItem(title: "got it", style: UIBarButtonItemStyle.Plain, target: self, action: "closeHelpPopup")
+        closeButton.tintColor = UIColor.whiteColor()
+        
+        popup.navigationItem.leftBarButtonItem = closeButton
+        
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
+    
+    func closeHelpPopup() {
+        self.dismissViewControllerAnimated(true, completion: {
+            self.hiddenField.becomeFirstResponder()
+        })
+    }
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
@@ -71,6 +95,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
 
+    
+    //pragma MARK: - emoji inputs and table
+    
     @IBAction func hiddenInputReceived(sender: UITextField, forEvent event: UIEvent) {
         var emoji = sender.text.substringFromIndex(sender.text.endIndex.predecessor()) as NSString
         

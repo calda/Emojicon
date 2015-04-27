@@ -18,6 +18,9 @@ class EmojiCell : UITableViewCell {
     
     @IBOutlet weak var savedDisplay: UIView!
     @IBOutlet weak var savedLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var whatsNext: UIButton!
+    @IBOutlet weak var whatsNextWidth: NSLayoutConstraint!
 
     
     @IBAction func saveButton(sender: AnyObject) {
@@ -25,6 +28,12 @@ class EmojiCell : UITableViewCell {
         UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
                 self.layoutIfNeeded()
             }, completion: { success in
+                
+                self.saveButton.hidden = true
+                self.whatsNext.hidden = false
+                self.whatsNextWidth.constant = 103
+                self.layoutIfNeeded()
+                
                 self.savedLeading.constant = -375
                 UIView.animateWithDuration(1.0, delay: 1.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
                         self.layoutIfNeeded()
@@ -35,6 +44,10 @@ class EmojiCell : UITableViewCell {
                         self.savedDisplay.alpha = 1.0
                 })
         })
+    }
+    
+    @IBAction func showHelpPopup(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().postNotificationName(SHOW_HELP_POPUP, object: nil)
     }
     
     func decorateCell(emoji: String) {
@@ -91,7 +104,8 @@ class EmojiCell : UITableViewCell {
         labelContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
         saveButton.hidden = true
         saveButton.enabled = false
-        
+        whatsNext.hidden = true
+        whatsNextWidth.constant = 10
         savedLeading.constant = 375
         
         setNeedsLayout()
