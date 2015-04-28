@@ -22,11 +22,18 @@ class EmojiCell : UITableViewCell {
     @IBOutlet weak var whatsNext: UIButton!
     @IBOutlet weak var whatsNextWidth: NSLayoutConstraint!
 
+    //pragma MARK: - save emoji image
     
     @IBAction func saveButton(sender: AnyObject) {
+        playSaveAnimation()
+        UIImageWriteToSavedPhotosAlbum(getEmojiImage(), nil, nil, nil)
+    }
+    
+    
+    func playSaveAnimation() {
         savedLeading.constant = 0
         UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
-                self.layoutIfNeeded()
+            self.layoutIfNeeded()
             }, completion: { success in
                 
                 self.saveButton.hidden = true
@@ -36,7 +43,7 @@ class EmojiCell : UITableViewCell {
                 
                 self.savedLeading.constant = -375
                 UIView.animateWithDuration(1.0, delay: 1.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
-                        self.layoutIfNeeded()
+                    self.layoutIfNeeded()
                     self.savedDisplay.alpha = 0.0
                     }, completion: { success in
                         self.savedLeading.constant = 375
@@ -46,9 +53,42 @@ class EmojiCell : UITableViewCell {
         })
     }
     
+    
+    func getEmojiImage() -> UIImage {
+        let size = CGRectMake(0.0, 0.0, 500.0, 500.0)
+        UIGraphicsBeginImageContext(size.size)
+        let context = UIGraphicsGetCurrentContext()
+        
+        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextFillRect(context, size)
+        CGContextSetAllowsAntialiasing(context, true)
+        CGContextSetShouldAntialias(context, true)
+        //CGContextSetShouldSmoothFonts(context, true)
+        
+        let font = UIFont.systemFontOfSize(350.0)
+        let emoji = emojiDisplay.text! as NSString
+        let attributes = [NSFontAttributeName : font as AnyObject]
+        let drawSize = emoji.boundingRectWithSize(size.size, options: .UsesLineFragmentOrigin, attributes: attributes, context: NSStringDrawingContext()).size
+        
+        let xOffset = (size.width - drawSize.width) / 2
+        let yOffset = (size.height - drawSize.height) / 2
+        let drawPoint = CGPointMake(xOffset, yOffset)
+        let drawRect = CGRect(origin: drawPoint, size: drawSize)
+        emoji.drawInRect(CGRectIntegral(drawRect), withAttributes: attributes)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    
+     //pragma MARK: - table cell functions
+    
     @IBAction func showHelpPopup(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotificationName(SHOW_HELP_POPUP, object: nil)
     }
+    
     
     func decorateCell(emoji: String) {
         var emojiName = ""

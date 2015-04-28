@@ -66,7 +66,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") as! UIViewController
         
         let nav = UINavigationController(rootViewController: popup)
-        //nav.navigationBar.backgroundColor = self.view.backgroundColor
+        nav.navigationBar.backgroundColor = self.view.backgroundColor
         popup.view.frame = CGRectMake(0, 0, -44, self.view.bounds.size.height)
         
         let closeButton = UIBarButtonItem(title: "got it", style: UIBarButtonItemStyle.Plain, target: self, action: "closeHelpPopup")
