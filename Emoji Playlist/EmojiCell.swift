@@ -26,9 +26,18 @@ class EmojiCell : UITableViewCell {
     
     @IBAction func saveButton(sender: AnyObject) {
         playSaveAnimation()
-        UIImageWriteToSavedPhotosAlbum(getEmojiImage(), nil, nil, nil)
+        dispatch_async(dispatch_get_main_queue(), {
+            UIImageWriteToSavedPhotosAlbum(self.getEmojiImage(), nil, nil, nil)
+        })
     }
     
+    @IBAction func buttonTouched(sender: AnyObject) {
+        self.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
+    }
+    
+    @IBAction func buttonCanceled(sender: AnyObject) {
+        self.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+    }
     
     func playSaveAnimation() {
         savedLeading.constant = 0
@@ -40,6 +49,7 @@ class EmojiCell : UITableViewCell {
                 self.whatsNext.hidden = false
                 self.whatsNextWidth.constant = 103
                 self.layoutIfNeeded()
+                self.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
                 
                 self.savedLeading.constant = -375
                 UIView.animateWithDuration(1.0, delay: 1.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {

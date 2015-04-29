@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import iAd
 
 let SHOW_HELP_POPUP = "SHOW_HELP_POPUP"
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ADBannerViewDelegate {
     
     var emojis : [String] = []
     var savedCells : [Int] = []
@@ -45,9 +46,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
         let rawFrame = value.CGRectValue()
         let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
-        let height = keyboardFrame.height
+        self.keyboardHeight = keyboardFrame.height
         
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, height, 0.0)
+        if keyboardHidden {
+            keyboardHidden(false)
+        }
+        else if adPosition.constant > 0 { //ad is on screen, update ad position
+            adPosition.constant = keyboardHeight
+            self.view.layoutIfNeeded()
+        }
+        
+        updateContentInset()
+        
+    }
+    
+    func updateContentInset() {
+        let contentInset = self.keyboardHeight + (adPosition.constant > 0 ? 50 : 0)
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, contentInset, 0.0)
     }
     
     func animateBackground() {
@@ -66,21 +81,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") as! UIViewController
         
         let nav = UINavigationController(rootViewController: popup)
-        nav.navigationBar.backgroundColor = self.view.backgroundColor
+        nav.navigationBar.translucent = false
         popup.view.frame = CGRectMake(0, 0, -44, self.view.bounds.size.height)
         
         let closeButton = UIBarButtonItem(title: "got it", style: UIBarButtonItemStyle.Plain, target: self, action: "closeHelpPopup")
         closeButton.tintColor = UIColor.whiteColor()
+        popup.navigationItem.rightBarButtonItem = closeButton
         
-        popup.navigationItem.leftBarButtonItem = closeButton
+        popup.navigationController?.navigationBar.barTintColor = UIColor(hue: 0.0, saturation: 0.5, brightness: 0.7, alpha: 1.0)
+        let font = UIFont(name: "HelveticaNeue-Light", size: 25.0)!
+        popup.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor.whiteColor()]
         
         self.presentViewController(nav, animated: true, completion: nil)
+        self.keyboardHidden(true)
     }
     
     func closeHelpPopup() {
-        self.dismissViewControllerAnimated(true, completion: {
-            self.hiddenField.becomeFirstResponder()
-        })
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.hiddenField.becomeFirstResponder()
+        self.adPosition.constant = -50
+        self.view.layoutIfNeeded()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -147,5 +167,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return emojis.count + about.count
     }
     
+    //pragma MAR: - ad delegate
+    
+    @IBOutlet weak var adBanner: ADBannerView!
+    @IBOutlet weak var adPosition: NSLayoutConstraint!
+    var keyboardHeight : CGFloat = 0
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        
+        //do not show ad if 4S (aspect != 9:16) (9/16 = 0.5625)
+        let aspect = self.view.frame.width / self.view.frame.height
+        if aspect > 0.6 || aspect < 0.5 {
+            println("iPhone 4S")
+            return
+        }
+        
+        adPosition.constant = keyboardHeight
+        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: { success in
+                self.updateContentInset()
+        })
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        adPosition.constant = -50
+        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: { success in
+                self.updateContentInset()
+        })
+    }
+    
+    var keyboardHidden = false
+    
+    func keyboardHidden(hidden: Bool) {
+        keyboardHidden = hidden
+        adPosition.constant = (hidden ? -50 : keyboardHeight)
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
+    }
 
 }
