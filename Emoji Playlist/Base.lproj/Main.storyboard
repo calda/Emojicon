@@ -92,7 +92,23 @@
                                                         <action selector="showHelpPopup:" destination="gvJ-jn-73m" eventType="touchUpInside" id="YgQ-af-9La"/>
                                                     </connections>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jW-X4-skc" userLabel="save">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9H-Cc-yjW" userLabel="saveTarget">
+                                                    <rect key="frame" x="316" y="0.0" width="59" height="59"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="q9H-Cc-yjW" secondAttribute="height" multiplier="1:1" id="XmZ-br-MPW"/>
+                                                    </constraints>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="buttonCanceled:" destination="gvJ-jn-73m" eventType="touchDragExit" id="8sg-Gx-aCx"/>
+                                                        <action selector="buttonCanceled:" destination="gvJ-jn-73m" eventType="touchCancel" id="isb-BM-HQL"/>
+                                                        <action selector="buttonTouched:" destination="gvJ-jn-73m" eventType="touchDown" id="4fj-ia-x2Z"/>
+                                                        <action selector="buttonTouched:" destination="gvJ-jn-73m" eventType="touchDragEnter" id="aZc-Kl-LnL"/>
+                                                        <action selector="saveButton:" destination="gvJ-jn-73m" eventType="touchUpInside" id="C2i-BK-t5C"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jW-X4-skc" userLabel="save">
                                                     <rect key="frame" x="337" y="15" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="IUo-Ac-cwS"/>
@@ -107,8 +123,10 @@
                                                     <state key="selected" image="download-selected"/>
                                                     <state key="highlighted" image="download-selected"/>
                                                     <connections>
+                                                        <action selector="buttonCanceled:" destination="gvJ-jn-73m" eventType="touchDragExit" id="bHz-kS-MS4"/>
                                                         <action selector="buttonCanceled:" destination="gvJ-jn-73m" eventType="touchCancel" id="f5W-WS-jv6"/>
                                                         <action selector="buttonTouched:" destination="gvJ-jn-73m" eventType="touchDown" id="Itc-8p-Fr8"/>
+                                                        <action selector="buttonTouched:" destination="gvJ-jn-73m" eventType="touchDragEnter" id="ej1-hH-74t"/>
                                                         <action selector="saveButton:" destination="gvJ-jn-73m" eventType="touchUpInside" id="w13-Qu-Oh1"/>
                                                     </connections>
                                                 </button>
@@ -151,11 +169,14 @@
                                                 <constraint firstItem="9jW-X4-skc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ATH-E8-M10" secondAttribute="trailing" priority="999" constant="5" id="KRu-w4-3J2"/>
                                                 <constraint firstAttribute="trailing" secondItem="0Sm-4q-Bet" secondAttribute="trailing" id="OSo-bb-Fqp"/>
                                                 <constraint firstAttribute="centerY" secondItem="wlL-jj-nAO" secondAttribute="centerY" id="RfB-x2-q32"/>
+                                                <constraint firstAttribute="bottom" secondItem="q9H-Cc-yjW" secondAttribute="bottom" id="Rrx-VR-tQ2"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="9jW-X4-skc" secondAttribute="trailing" id="bUq-6I-KCl"/>
                                                 <constraint firstItem="8s1-jl-7BR" firstAttribute="leading" secondItem="sJX-tg-tSw" secondAttribute="leadingMargin" id="fnV-H5-EzT"/>
                                                 <constraint firstAttribute="bottom" secondItem="8s1-jl-7BR" secondAttribute="bottom" constant="5" id="owg-oe-Mcz"/>
+                                                <constraint firstItem="0Sm-4q-Bet" firstAttribute="leading" secondItem="q9H-Cc-yjW" secondAttribute="trailing" id="p1Y-sr-wMc"/>
                                                 <constraint firstItem="0Sm-4q-Bet" firstAttribute="leading" secondItem="wlL-jj-nAO" secondAttribute="trailing" id="qSp-s8-0bY"/>
                                                 <constraint firstAttribute="bottom" secondItem="ATH-E8-M10" secondAttribute="bottom" id="qTC-25-4Jj"/>
+                                                <constraint firstItem="q9H-Cc-yjW" firstAttribute="top" secondItem="sJX-tg-tSw" secondAttribute="top" id="rV2-ym-Zmy"/>
                                                 <constraint firstItem="0Sm-4q-Bet" firstAttribute="leading" secondItem="sJX-tg-tSw" secondAttribute="leading" constant="375" id="zAR-LZ-Lqm"/>
                                             </constraints>
                                             <variation key="default">
@@ -170,6 +191,7 @@
                                             <outlet property="labelContainer" destination="8s1-jl-7BR" id="z5g-rO-pil"/>
                                             <outlet property="nameLabel" destination="ATH-E8-M10" id="TMs-dc-nQr"/>
                                             <outlet property="saveButton" destination="9jW-X4-skc" id="tGD-OI-jNo"/>
+                                            <outlet property="saveTarget" destination="q9H-Cc-yjW" id="t88-wo-cUG"/>
                                             <outlet property="savedDisplay" destination="0Sm-4q-Bet" id="B7a-8G-SQh"/>
                                             <outlet property="savedLeading" destination="zAR-LZ-Lqm" id="sbb-Bh-XGE"/>
                                             <outlet property="whatsNext" destination="wlL-jj-nAO" id="6ZW-XG-k7d"/>

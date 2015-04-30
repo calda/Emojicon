@@ -15,6 +15,7 @@ class EmojiCell : UITableViewCell {
     @IBOutlet weak var emojiDisplay: UILabel!
     @IBOutlet weak var labelContainer: UIView!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var saveTarget: UIButton!
     
     @IBOutlet weak var savedDisplay: UIView!
     @IBOutlet weak var savedLeading: NSLayoutConstraint!
@@ -32,7 +33,7 @@ class EmojiCell : UITableViewCell {
     }
     
     @IBAction func buttonTouched(sender: AnyObject) {
-        self.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
+        self.backgroundColor = UIColor(white: 0.96, alpha: 1.0)
     }
     
     @IBAction func buttonCanceled(sender: AnyObject) {
@@ -46,6 +47,9 @@ class EmojiCell : UITableViewCell {
             }, completion: { success in
                 
                 self.saveButton.hidden = true
+                self.saveButton.enabled = false
+                self.saveTarget.hidden = true
+                self.saveTarget.enabled = false
                 self.whatsNext.hidden = false
                 self.whatsNextWidth.constant = 103
                 self.layoutIfNeeded()
@@ -143,6 +147,8 @@ class EmojiCell : UITableViewCell {
         decorateCell(emoji: emoji, text: emojiName)
         saveButton.hidden = false
         saveButton.enabled = true
+        saveTarget.hidden = false
+        saveTarget.enabled = true
     }
     
     
@@ -154,6 +160,8 @@ class EmojiCell : UITableViewCell {
         labelContainer.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).CGColor
         saveButton.hidden = true
         saveButton.enabled = false
+        saveTarget.enabled = false
+        saveTarget.hidden = true
         whatsNext.hidden = true
         whatsNextWidth.constant = 10
         savedLeading.constant = 375

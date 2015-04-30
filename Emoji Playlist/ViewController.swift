@@ -41,22 +41,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: SHOW_HELP_POPUP, object: nil)
     }
     
+    var keyboardHidden = false
+    
     func keyboardChanged(notification: NSNotification) {
         let info = notification.userInfo!
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+        
+        
         let rawFrame = value.CGRectValue()
         let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
         self.keyboardHeight = keyboardFrame.height
         
-        if keyboardHidden {
-            keyboardHidden(false)
-        }
-        else if adPosition.constant > 0 { //ad is on screen, update ad position
-            adPosition.constant = keyboardHeight
-            self.view.layoutIfNeeded()
+        if !adBanner.bannerLoaded {
+            //ad is not on screen
+            keyboardHidden = false
+            return
         }
         
         updateContentInset()
+        adPosition.constant = keyboardHeight
+        
+        if keyboardHidden {
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
+        } else {
+            self.view.layoutIfNeeded()
+        }
+        
+        keyboardHidden = false
         
     }
     
@@ -98,9 +109,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func closeHelpPopup() {
         self.dismissViewControllerAnimated(true, completion: nil)
-        self.hiddenField.becomeFirstResponder()
-        self.adPosition.constant = -50
+        self.adPosition.constant = -55
         self.view.layoutIfNeeded()
+        keyboardHidden = true
+        self.hiddenField.becomeFirstResponder()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -123,7 +135,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if emoji.length == 0 { return }
         
-        if emoji.length > 1 {
+        /*if emoji.length > 1 {
             let char2 = emoji.characterAtIndex(1)
             if char2 >= 57339 && char2 <= 57343
             { //is skin tone marker
@@ -133,7 +145,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             if emoji.length % 4 == 0 && emoji.length > 4 { //flags stick together for some reason?
                 emoji = emoji.substringFromIndex(emoji.length - 4)
             }
-        }
+        }*/
         
         emojis.insert(emoji as String, atIndex: 0)
         tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
@@ -179,6 +191,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let aspect = self.view.frame.width / self.view.frame.height
         if aspect > 0.6 || aspect < 0.5 {
             println("iPhone 4S")
+            adBanner.hidden = true
             return
         }
         
@@ -197,12 +210,20 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         })
     }
     
-    var keyboardHidden = false
-    
     func keyboardHidden(hidden: Bool) {
-        keyboardHidden = hidden
         adPosition.constant = (hidden ? -50 : keyboardHeight)
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+        self.keyboardHidden(true)
+        return true
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        self.adPosition.constant = -55
+        self.view.layoutIfNeeded()
+        self.hiddenField.becomeFirstResponder()
     }
 
 }
