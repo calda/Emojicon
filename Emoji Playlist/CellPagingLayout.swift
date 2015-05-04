@@ -8,9 +8,15 @@
 
 import UIKit
 
+let SYNCHRONIZE_TO_PAGE_NOTIFICATION = "SYNCHRONIZE_TO_PAGE_NOTIFICATION"
+
 class CellPagingLayout : UICollectionViewFlowLayout {
     
-    var pageWidth : CGFloat = 0
+    var pageWidth : CGFloat {
+        get {
+            return self.collectionView!.frame.width
+        }
+    }
     var previousPage : CGFloat = 0
     var pageControl : UIPageControl?
     var enabled = true
@@ -18,7 +24,20 @@ class CellPagingLayout : UICollectionViewFlowLayout {
     init(pageWidth: CGFloat) {
         super.init()
         self.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.pageWidth = pageWidth
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "syncToPage:", name: SYNCHRONIZE_TO_PAGE_NOTIFICATION, object: nil)
+    }
+    
+    func syncToPage(notification: NSNotification) {
+        
+        var page = notification.object as! Int
+        if page < 0 {
+            page = 0
+        } else if page > 4 {
+            page = 4
+        }
+        
+        self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -68,6 +87,8 @@ class CellPagingLayout : UICollectionViewFlowLayout {
             let pageNumber = newOffset / pageWidth
             pageControl.currentPage = Int(pageNumber)
         }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(SYNCHRONIZE_TO_PAGE_NOTIFICATION, object: Int(newOffset / pageWidth))
         
         return newOffset
     }

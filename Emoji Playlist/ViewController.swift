@@ -195,12 +195,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return
         }
         
-        adPosition.constant = keyboardHeight
-        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: { success in
-                self.updateContentInset()
-        })
+        if adPosition.constant != keyboardHeight {
+            adPosition.constant = keyboardHeight
+            UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: { success in
+                    self.updateContentInset()
+            })
+        }
+        
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
