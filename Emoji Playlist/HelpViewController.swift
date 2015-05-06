@@ -87,3 +87,11 @@ class TextCell : UICollectionViewCell {
     }
     
 }
+
+class LightNavigation : UINavigationController {
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+}

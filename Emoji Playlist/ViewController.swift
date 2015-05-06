@@ -91,7 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func showHelpPopup() {
         let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") as! UIViewController
         
-        let nav = UINavigationController(rootViewController: popup)
+        let nav = LightNavigation(rootViewController: popup)
         nav.navigationBar.translucent = false
         popup.view.frame = CGRectMake(0, 0, -44, self.view.bounds.size.height)
         
@@ -103,6 +103,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let font = UIFont(name: "HelveticaNeue-Light", size: 25.0)!
         popup.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor.whiteColor()]
         
+        nav.modalPresentationStyle = UIModalPresentationStyle.Popover
+        nav.modalPresentationCapturesStatusBarAppearance = true
         self.presentViewController(nav, animated: true, completion: nil)
         self.keyboardHidden(true)
     }
@@ -135,7 +137,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if emoji.length == 0 { return }
         
-        /*if emoji.length > 1 {
+        if emoji.length > 1 {
             let char2 = emoji.characterAtIndex(1)
             if char2 >= 57339 && char2 <= 57343
             { //is skin tone marker
@@ -145,7 +147,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             if emoji.length % 4 == 0 && emoji.length > 4 { //flags stick together for some reason?
                 emoji = emoji.substringFromIndex(emoji.length - 4)
             }
-        }*/
+        }
         
         emojis.insert(emoji as String, atIndex: 0)
         tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
@@ -160,7 +162,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if indexPath.item >= emojis.count {
             let aboutText = about[indexPath.item - emojis.count]
-            cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text)
+            cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text, isLast: aboutText.text.hasSuffix("nice!"))
         }
         
         else {

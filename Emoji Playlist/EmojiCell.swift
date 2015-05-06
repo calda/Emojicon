@@ -23,6 +23,8 @@ class EmojiCell : UITableViewCell {
     @IBOutlet weak var whatsNext: UIButton!
     @IBOutlet weak var whatsNextWidth: NSLayoutConstraint!
 
+    @IBOutlet weak var thenWhatButton: UIButton!
+    
     //pragma MARK: - save emoji image
     
     @IBAction func saveButton(sender: AnyObject) {
@@ -144,7 +146,7 @@ class EmojiCell : UITableViewCell {
             }
         }
         
-        decorateCell(emoji: emoji, text: emojiName)
+        decorateCell(emoji: emoji, text: emojiName, isLast: false)
         saveButton.hidden = false
         saveButton.enabled = true
         saveTarget.hidden = false
@@ -152,7 +154,7 @@ class EmojiCell : UITableViewCell {
     }
     
     
-    func decorateCell(#emoji: String, text: String) {
+    func decorateCell(#emoji: String, text: String, isLast: Bool) {
         nameLabel.text = text
         emojiDisplay.text = emoji
         
@@ -168,6 +170,11 @@ class EmojiCell : UITableViewCell {
         
         setNeedsLayout()
         setNeedsDisplay()
+        
+        if isLast {
+            thenWhatButton.enabled = true
+            thenWhatButton.hidden = false
+        }
     }
     
 }

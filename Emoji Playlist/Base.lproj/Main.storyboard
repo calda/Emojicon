@@ -156,6 +156,19 @@
                                                         <constraint firstAttribute="centerY" secondItem="RuX-mZ-uZT" secondAttribute="centerY" id="t83-vO-p9f"/>
                                                     </constraints>
                                                 </view>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Lp-ol-a5a">
+                                                    <rect key="frame" x="255" y="13" width="100" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="WeS-q8-DAJ"/>
+                                                    </constraints>
+                                                    <state key="normal" title="then what?">
+                                                        <color key="titleColor" red="0.25490196078431371" green="0.62352941176470589" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showHelpPopup:" destination="gvJ-jn-73m" eventType="touchUpInside" id="cwX-62-kVZ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ATH-E8-M10" firstAttribute="top" secondItem="sJX-tg-tSw" secondAttribute="top" id="16f-d4-VPS"/>
@@ -178,12 +191,18 @@
                                                 <constraint firstItem="0Sm-4q-Bet" firstAttribute="leading" secondItem="wlL-jj-nAO" secondAttribute="trailing" id="qSp-s8-0bY"/>
                                                 <constraint firstAttribute="bottom" secondItem="ATH-E8-M10" secondAttribute="bottom" id="qTC-25-4Jj"/>
                                                 <constraint firstItem="q9H-Cc-yjW" firstAttribute="top" secondItem="sJX-tg-tSw" secondAttribute="top" id="rV2-ym-Zmy"/>
+                                                <constraint firstAttribute="trailing" secondItem="0Lp-ol-a5a" secondAttribute="trailing" constant="20" id="s2G-vi-ir3"/>
+                                                <constraint firstItem="0Sm-4q-Bet" firstAttribute="leading" secondItem="0Lp-ol-a5a" secondAttribute="trailing" constant="20" id="srP-Hh-txS"/>
+                                                <constraint firstItem="9jW-X4-skc" firstAttribute="leading" secondItem="0Lp-ol-a5a" secondAttribute="trailing" constant="20" id="v0h-ce-1Gp"/>
+                                                <constraint firstAttribute="centerY" secondItem="0Lp-ol-a5a" secondAttribute="centerY" id="yAb-aA-e6Z"/>
                                                 <constraint firstItem="0Sm-4q-Bet" firstAttribute="leading" secondItem="sJX-tg-tSw" secondAttribute="leading" constant="375" id="zAR-LZ-Lqm"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="v0h-ce-1Gp"/>
                                                     <exclude reference="6sz-97-RE9"/>
                                                     <exclude reference="qSp-s8-0bY"/>
+                                                    <exclude reference="srP-Hh-txS"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -195,6 +214,7 @@
                                             <outlet property="saveTarget" destination="q9H-Cc-yjW" id="t88-wo-cUG"/>
                                             <outlet property="savedDisplay" destination="0Sm-4q-Bet" id="B7a-8G-SQh"/>
                                             <outlet property="savedLeading" destination="zAR-LZ-Lqm" id="sbb-Bh-XGE"/>
+                                            <outlet property="thenWhatButton" destination="0Lp-ol-a5a" id="JNn-G9-aEa"/>
                                             <outlet property="whatsNext" destination="wlL-jj-nAO" id="6ZW-XG-k7d"/>
                                             <outlet property="whatsNextWidth" destination="xJs-ip-y2i" id="FI0-MI-foT"/>
                                         </connections>
@@ -284,7 +304,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="297" height="540"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2oy-xL-A8f">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Here" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2oy-xL-A8f">
                                                     <rect key="frame" x="18" y="0.0" width="261" height="540"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="40"/>
                                                     <color key="textColor" red="0.15056315064430237" green="0.15055865049362183" blue="0.15056121349334717" alpha="1" colorSpace="calibratedRGB"/>
@@ -311,9 +331,9 @@
                                     <outlet property="delegate" destination="j0l-N7-big" id="qVs-TP-edv"/>
                                 </connections>
                             </collectionView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="screenshots" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IPB-7C-Asa">
-                                <rect key="frame" x="47" y="147" width="281" height="500"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="screenshots" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IPB-7C-Asa">
+                                <rect key="frame" x="45" y="223" width="285" height="507"/>
+                                <color key="backgroundColor" red="0.11254779249429703" green="0.11254442483186722" blue="0.11254633218050003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="IPB-7C-Asa" secondAttribute="height" multiplier="9:16" id="S0M-ZR-zPJ"/>
                                 </constraints>
@@ -358,22 +378,33 @@
                                 <color key="pageIndicatorTintColor" red="0.86846256256103516" green="0.77918046712875366" blue="0.78702819347381592" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.63313698768615723" green="0.26770588755607605" blue="0.29060474038124084" alpha="1" colorSpace="calibratedRGB"/>
                             </pageControl>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iphone cutout.png" translatesAutoresizingMaskIntoConstraints="NO" id="jwx-kp-SJZ">
+                                <rect key="frame" x="0.0" y="137" width="375" height="680"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jwx-kp-SJZ" secondAttribute="height" multiplier="16:29" id="U0e-C5-k1G"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="EOB-Vo-4ml" firstAttribute="top" secondItem="0H5-fJ-ixO" secondAttribute="bottom" id="1sV-Sp-M9E"/>
-                            <constraint firstItem="IPB-7C-Asa" firstAttribute="width" secondItem="roU-T4-7yR" secondAttribute="width" multiplier="0.75" id="A21-Ao-Ysj"/>
+                            <constraint firstItem="IPB-7C-Asa" firstAttribute="width" secondItem="roU-T4-7yR" secondAttribute="width" multiplier="0.76" id="A21-Ao-Ysj"/>
+                            <constraint firstItem="jwx-kp-SJZ" firstAttribute="width" secondItem="roU-T4-7yR" secondAttribute="width" id="Iiw-e7-Z4r"/>
                             <constraint firstAttribute="centerX" secondItem="0H5-fJ-ixO" secondAttribute="centerX" id="KpQ-Fc-WtM"/>
                             <constraint firstItem="0H5-fJ-ixO" firstAttribute="top" secondItem="35A-uG-ozm" secondAttribute="bottom" id="OGr-de-SPf"/>
+                            <constraint firstItem="IPB-7C-Asa" firstAttribute="centerY" secondItem="jwx-kp-SJZ" secondAttribute="centerY" id="UA3-xx-ryB"/>
                             <constraint firstAttribute="trailing" secondItem="35A-uG-ozm" secondAttribute="trailing" id="UWR-7m-yIR"/>
                             <constraint firstItem="EOB-Vo-4ml" firstAttribute="top" secondItem="35A-uG-ozm" secondAttribute="bottom" id="b3P-Zm-iA5"/>
                             <constraint firstItem="35A-uG-ozm" firstAttribute="top" secondItem="roU-T4-7yR" secondAttribute="top" constant="10" id="da9-gL-afZ"/>
                             <constraint firstItem="35A-uG-ozm" firstAttribute="leading" secondItem="roU-T4-7yR" secondAttribute="leading" id="eRX-ev-Yc3"/>
+                            <constraint firstItem="jwx-kp-SJZ" firstAttribute="top" secondItem="0H5-fJ-ixO" secondAttribute="bottom" constant="10" id="iUk-tp-fwl"/>
                             <constraint firstAttribute="centerX" secondItem="IPB-7C-Asa" secondAttribute="centerX" id="rJQ-Kv-ebm"/>
-                            <constraint firstItem="IPB-7C-Asa" firstAttribute="top" secondItem="0H5-fJ-ixO" secondAttribute="bottom" constant="20" id="vif-Eg-CAk"/>
+                            <constraint firstItem="jwx-kp-SJZ" firstAttribute="leading" secondItem="35A-uG-ozm" secondAttribute="leading" id="uH1-gM-XO0"/>
+                            <constraint firstItem="IPB-7C-Asa" firstAttribute="top" secondItem="0H5-fJ-ixO" secondAttribute="bottom" constant="96" id="vif-Eg-CAk"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="vif-Eg-CAk"/>
                                 <exclude reference="1sV-Sp-M9E"/>
                                 <exclude reference="b3P-Zm-iA5"/>
                             </mask>
@@ -398,5 +429,6 @@
         <image name="checkmark" width="100" height="100"/>
         <image name="download" width="100" height="100"/>
         <image name="download-selected" width="100" height="100"/>
+        <image name="iphone cutout.png" width="1035" height="1600"/>
     </resources>
 </document>

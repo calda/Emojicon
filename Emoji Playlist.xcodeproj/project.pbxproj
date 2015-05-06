@@ -13,6 +13,7 @@
 		44572D591AF7A0C20047FD0C /* s2.png in Resources */ = {isa = PBXBuildFile; fileRef = 44572D541AF7A0C20047FD0C /* s2.png */; };
 		44572D5A1AF7A0C20047FD0C /* s3.png in Resources */ = {isa = PBXBuildFile; fileRef = 44572D551AF7A0C20047FD0C /* s3.png */; };
 		44572D5B1AF7A0C20047FD0C /* s4.png in Resources */ = {isa = PBXBuildFile; fileRef = 44572D561AF7A0C20047FD0C /* s4.png */; };
+		44C877711AFA893B00EB5BC1 /* iphone cutout.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C877701AFA893B00EB5BC1 /* iphone cutout.png */; };
 		44D39C221AF10002001DA0B2 /* CellPagingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D39C211AF10002001DA0B2 /* CellPagingLayout.swift */; };
 		44D39C241AF100C1001DA0B2 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D39C231AF100C1001DA0B2 /* HelpViewController.swift */; };
 		44E52F0A1ADFE9E500237ADD /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E52F091ADFE9E500237ADD /* EmojiCell.swift */; };
@@ -41,6 +42,7 @@
 		44572D541AF7A0C20047FD0C /* s2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s2.png; sourceTree = "<group>"; };
 		44572D551AF7A0C20047FD0C /* s3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s3.png; sourceTree = "<group>"; };
 		44572D561AF7A0C20047FD0C /* s4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s4.png; sourceTree = "<group>"; };
+		44C877701AFA893B00EB5BC1 /* iphone cutout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone cutout.png"; sourceTree = "<group>"; };
 		44D39C211AF10002001DA0B2 /* CellPagingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPagingLayout.swift; sourceTree = "<group>"; };
 		44D39C231AF100C1001DA0B2 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		44E52F091ADFE9E500237ADD /* EmojiCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				44572D541AF7A0C20047FD0C /* s2.png */,
 				44572D551AF7A0C20047FD0C /* s3.png */,
 				44572D561AF7A0C20047FD0C /* s4.png */,
+				44C877701AFA893B00EB5BC1 /* iphone cutout.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				44572D5B1AF7A0C20047FD0C /* s4.png in Resources */,
 				44572D591AF7A0C20047FD0C /* s2.png in Resources */,
 				44F46F781ADD3DEB00F46BA2 /* Main.storyboard in Resources */,
+				44C877711AFA893B00EB5BC1 /* iphone cutout.png in Resources */,
 				44572D571AF7A0C20047FD0C /* s0.png in Resources */,
 				44572D5A1AF7A0C20047FD0C /* s3.png in Resources */,
 				44F46F7D1ADD3DEB00F46BA2 /* LaunchScreen.xib in Resources */,
