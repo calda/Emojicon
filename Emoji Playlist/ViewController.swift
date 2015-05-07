@@ -58,8 +58,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             return
         }
         
-        updateContentInset()
         adPosition.constant = keyboardHeight
+        updateContentInset()
         
         if keyboardHidden {
             UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)

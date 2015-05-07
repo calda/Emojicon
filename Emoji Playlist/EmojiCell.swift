@@ -44,6 +44,7 @@ class EmojiCell : UITableViewCell {
     
     func playSaveAnimation() {
         savedLeading.constant = 0
+        savedDisplay.alpha = 1.0
         UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
             self.layoutIfNeeded()
             }, completion: { success in
@@ -62,9 +63,9 @@ class EmojiCell : UITableViewCell {
                     self.layoutIfNeeded()
                     self.savedDisplay.alpha = 0.0
                     }, completion: { success in
+                        self.savedDisplay.alpha = 0.0
                         self.savedLeading.constant = 375
                         self.layoutIfNeeded()
-                        self.savedDisplay.alpha = 1.0
                 })
         })
     }
@@ -151,6 +152,7 @@ class EmojiCell : UITableViewCell {
         saveButton.enabled = true
         saveTarget.hidden = false
         saveTarget.enabled = true
+        savedDisplay.alpha = 0.0
     }
     
     
@@ -167,6 +169,8 @@ class EmojiCell : UITableViewCell {
         whatsNext.hidden = true
         whatsNextWidth.constant = 10
         savedLeading.constant = 375
+        thenWhatButton.enabled = false
+        thenWhatButton.hidden = true
         
         setNeedsLayout()
         setNeedsDisplay()

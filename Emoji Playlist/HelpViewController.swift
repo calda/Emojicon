@@ -29,6 +29,11 @@ class HelpViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         screenshotCollection.decelerationRate = UIScrollViewDecelerationRateFast
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(screenshotCollection.collectionViewLayout)
+        NSNotificationCenter.defaultCenter().removeObserver(pageCollection.collectionViewLayout)
+    }
+    
     var texts = ["📲 open playlists", "🎧 select a playlist", "✏️ edit playlist", "🎸 select emoji", "🙏🏻 nice!"]
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
