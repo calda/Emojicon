@@ -34,7 +34,7 @@ class HelpViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
         NSNotificationCenter.defaultCenter().removeObserver(pageCollection.collectionViewLayout)
     }
     
-    var texts = ["📲 open playlists", "🎧 select a playlist", "✏️ edit playlist", "🎸 select emoji", "🙏🏻 nice!"]
+    var texts = ["use them anywhere", "📱 contact pictures", "🎧 playlists", "👥 social networks", "🙏🏻 nice!"]
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         

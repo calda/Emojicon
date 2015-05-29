@@ -17,10 +17,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var savedCells : [Int] = []
     
     let about : [(emoji: String, text: String)] = [
-        ("🌐", "1️⃣ open emoji keyboard"),
+        ("😀", "1️⃣ open emoji keyboard"),
         ("👇🏻", "2️⃣ type emoji"),
         ("📲", "3️⃣ save to camera roll"),
-        ("🎧", "4️⃣ set as playlist icon"),
+        ("🌐", "4️⃣ use it anywhere"),
         ("🙏🏻", "5️⃣ nice!")
     ]
     
@@ -135,7 +135,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func hiddenInputReceived(sender: UITextField, forEvent event: UIEvent) {
         var emoji = sender.text.substringFromIndex(sender.text.endIndex.predecessor()) as NSString
         
-        if emoji.length == 0 { return }
+        if emoji.length == 0 || emoji.length == 1 { return }
         
         if emoji.length > 1 {
             let char2 = emoji.characterAtIndex(1)
@@ -162,7 +162,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if indexPath.item >= emojis.count {
             let aboutText = about[indexPath.item - emojis.count]
-            cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text, isLast: aboutText.text.hasSuffix("nice!"))
+            cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text, isLast: aboutText.text.hasSuffix("anywhere"))
         }
         
         else {
