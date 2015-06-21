@@ -12,6 +12,10 @@
 		2E6B94A61B18DBE300115D90 /* s0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A51B18DBE300115D90 /* s0.png */; };
 		2E6B94A81B18DBEE00115D90 /* s4.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A71B18DBEE00115D90 /* s4.png */; };
 		2E6B94AA1B18DBFF00115D90 /* s2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A91B18DBFF00115D90 /* s2.png */; };
+		2E94C0221B36133B00E36032 /* ColorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E94C0211B36133B00E36032 /* ColorPickerCell.swift */; };
+		2EFE4B101B361F2D00AFA27A /* Plus Math-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EFE4B0F1B361F2D00AFA27A /* Plus Math-100.png */; };
+		2EFE4B121B361F3000AFA27A /* Minus Math-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EFE4B111B361F3000AFA27A /* Minus Math-100.png */; };
+		2EFE4B161B3622D400AFA27A /* Delete Sign-100(1).png in Resources */ = {isa = PBXBuildFile; fileRef = 2EFE4B151B3622D400AFA27A /* Delete Sign-100(1).png */; };
 		443D92001AF14DBE00EFDD3A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443D91FF1AF14DBE00EFDD3A /* iAd.framework */; };
 		44C877711AFA893B00EB5BC1 /* iphone cutout.png in Resources */ = {isa = PBXBuildFile; fileRef = 44C877701AFA893B00EB5BC1 /* iphone cutout.png */; };
 		44D39C221AF10002001DA0B2 /* CellPagingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D39C211AF10002001DA0B2 /* CellPagingLayout.swift */; };
@@ -22,18 +26,7 @@
 		44F46F781ADD3DEB00F46BA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44F46F761ADD3DEB00F46BA2 /* Main.storyboard */; };
 		44F46F7A1ADD3DEB00F46BA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44F46F791ADD3DEB00F46BA2 /* Images.xcassets */; };
 		44F46F7D1ADD3DEB00F46BA2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44F46F7B1ADD3DEB00F46BA2 /* LaunchScreen.xib */; };
-		44F46F891ADD3DEB00F46BA2 /* Emoji_PlaylistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F46F881ADD3DEB00F46BA2 /* Emoji_PlaylistTests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		44F46F831ADD3DEB00F46BA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 44F46F651ADD3DEB00F46BA2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 44F46F6C1ADD3DEB00F46BA2;
-			remoteInfo = "Emoji Playlist";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2E6B94A11B18DBB400115D90 /* s3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s3.png; sourceTree = "<group>"; };
@@ -41,6 +34,11 @@
 		2E6B94A51B18DBE300115D90 /* s0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s0.png; sourceTree = "<group>"; };
 		2E6B94A71B18DBEE00115D90 /* s4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s4.png; sourceTree = "<group>"; };
 		2E6B94A91B18DBFF00115D90 /* s2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s2.png; sourceTree = "<group>"; };
+		2E94C0201B36112900E36032 /* Emojicon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Emojicon.entitlements; sourceTree = "<group>"; };
+		2E94C0211B36133B00E36032 /* ColorPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerCell.swift; sourceTree = "<group>"; };
+		2EFE4B0F1B361F2D00AFA27A /* Plus Math-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Plus Math-100.png"; sourceTree = "<group>"; };
+		2EFE4B111B361F3000AFA27A /* Minus Math-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Minus Math-100.png"; sourceTree = "<group>"; };
+		2EFE4B151B3622D400AFA27A /* Delete Sign-100(1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Delete Sign-100(1).png"; sourceTree = "<group>"; };
 		443D91FF1AF14DBE00EFDD3A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		44C877701AFA893B00EB5BC1 /* iphone cutout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone cutout.png"; sourceTree = "<group>"; };
 		44D39C211AF10002001DA0B2 /* CellPagingLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPagingLayout.swift; sourceTree = "<group>"; };
@@ -53,7 +51,6 @@
 		44F46F771ADD3DEB00F46BA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		44F46F791ADD3DEB00F46BA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		44F46F7C1ADD3DEB00F46BA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		44F46F821ADD3DEB00F46BA2 /* Emoji PlaylistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Emoji PlaylistTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44F46F871ADD3DEB00F46BA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44F46F881ADD3DEB00F46BA2 /* Emoji_PlaylistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji_PlaylistTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,19 +64,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		44F46F7F1ADD3DEB00F46BA2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		44F46F641ADD3DEB00F46BA2 = {
 			isa = PBXGroup;
 			children = (
+				2E94C0201B36112900E36032 /* Emojicon.entitlements */,
 				443D91FF1AF14DBE00EFDD3A /* iAd.framework */,
 				44F46F6F1ADD3DEB00F46BA2 /* Emoji Playlist */,
 				44F46F851ADD3DEB00F46BA2 /* Emoji PlaylistTests */,
@@ -91,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				44F46F6D1ADD3DEB00F46BA2 /* Emojicon.app */,
-				44F46F821ADD3DEB00F46BA2 /* Emoji PlaylistTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,6 +92,7 @@
 				44F46F721ADD3DEB00F46BA2 /* AppDelegate.swift */,
 				44F46F741ADD3DEB00F46BA2 /* ViewController.swift */,
 				44E52F091ADFE9E500237ADD /* EmojiCell.swift */,
+				2E94C0211B36133B00E36032 /* ColorPickerCell.swift */,
 				44D39C231AF100C1001DA0B2 /* HelpViewController.swift */,
 				44D39C211AF10002001DA0B2 /* CellPagingLayout.swift */,
 				44F46F761ADD3DEB00F46BA2 /* Main.storyboard */,
@@ -122,6 +113,9 @@
 				2E6B94A71B18DBEE00115D90 /* s4.png */,
 				44F46F711ADD3DEB00F46BA2 /* Info.plist */,
 				44C877701AFA893B00EB5BC1 /* iphone cutout.png */,
+				2EFE4B0F1B361F2D00AFA27A /* Plus Math-100.png */,
+				2EFE4B111B361F3000AFA27A /* Minus Math-100.png */,
+				2EFE4B151B3622D400AFA27A /* Delete Sign-100(1).png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -163,40 +157,24 @@
 			productReference = 44F46F6D1ADD3DEB00F46BA2 /* Emojicon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		44F46F811ADD3DEB00F46BA2 /* Emoji PlaylistTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 44F46F8F1ADD3DEB00F46BA2 /* Build configuration list for PBXNativeTarget "Emoji PlaylistTests" */;
-			buildPhases = (
-				44F46F7E1ADD3DEB00F46BA2 /* Sources */,
-				44F46F7F1ADD3DEB00F46BA2 /* Frameworks */,
-				44F46F801ADD3DEB00F46BA2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				44F46F841ADD3DEB00F46BA2 /* PBXTargetDependency */,
-			);
-			name = "Emoji PlaylistTests";
-			productName = "Emoji PlaylistTests";
-			productReference = 44F46F821ADD3DEB00F46BA2 /* Emoji PlaylistTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		44F46F651ADD3DEB00F46BA2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Cal Stephens";
 				TargetAttributes = {
 					44F46F6C1ADD3DEB00F46BA2 = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = FZ89A5SZ7C;
-					};
-					44F46F811ADD3DEB00F46BA2 = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 44F46F6C1ADD3DEB00F46BA2;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -214,7 +192,6 @@
 			projectRoot = "";
 			targets = (
 				44F46F6C1ADD3DEB00F46BA2 /* Emojicon */,
-				44F46F811ADD3DEB00F46BA2 /* Emoji PlaylistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -225,21 +202,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E6B94A61B18DBE300115D90 /* s0.png in Resources */,
+				2EFE4B121B361F3000AFA27A /* Minus Math-100.png in Resources */,
 				2E6B94AA1B18DBFF00115D90 /* s2.png in Resources */,
 				44F46F781ADD3DEB00F46BA2 /* Main.storyboard in Resources */,
 				44C877711AFA893B00EB5BC1 /* iphone cutout.png in Resources */,
+				2EFE4B161B3622D400AFA27A /* Delete Sign-100(1).png in Resources */,
+				2EFE4B101B361F2D00AFA27A /* Plus Math-100.png in Resources */,
 				2E6B94A81B18DBEE00115D90 /* s4.png in Resources */,
 				44F46F7D1ADD3DEB00F46BA2 /* LaunchScreen.xib in Resources */,
 				2E6B94A21B18DBB400115D90 /* s3.png in Resources */,
 				2E6B94A41B18DBC100115D90 /* s1.png in Resources */,
 				44F46F7A1ADD3DEB00F46BA2 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		44F46F801ADD3DEB00F46BA2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,26 +228,11 @@
 				44F46F751ADD3DEB00F46BA2 /* ViewController.swift in Sources */,
 				44F46F731ADD3DEB00F46BA2 /* AppDelegate.swift in Sources */,
 				44D39C241AF100C1001DA0B2 /* HelpViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		44F46F7E1ADD3DEB00F46BA2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				44F46F891ADD3DEB00F46BA2 /* Emoji_PlaylistTests.swift in Sources */,
+				2E94C0221B36133B00E36032 /* ColorPickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		44F46F841ADD3DEB00F46BA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 44F46F6C1ADD3DEB00F46BA2 /* Emojicon */;
-			targetProxy = 44F46F831ADD3DEB00F46BA2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		44F46F761ADD3DEB00F46BA2 /* Main.storyboard */ = {
@@ -330,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -366,7 +324,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -378,10 +336,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Emoji Playlist/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -390,44 +350,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Emoji Playlist/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		44F46F901ADD3DEB00F46BA2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Emoji PlaylistTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Emoji Playlist.app/Emoji Playlist";
-			};
-			name = Debug;
-		};
-		44F46F911ADD3DEB00F46BA2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Emoji PlaylistTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Emoji Playlist.app/Emoji Playlist";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -448,15 +376,6 @@
 			buildConfigurations = (
 				44F46F8D1ADD3DEB00F46BA2 /* Debug */,
 				44F46F8E1ADD3DEB00F46BA2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		44F46F8F1ADD3DEB00F46BA2 /* Build configuration list for PBXNativeTarget "Emoji PlaylistTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				44F46F901ADD3DEB00F46BA2 /* Debug */,
-				44F46F911ADD3DEB00F46BA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

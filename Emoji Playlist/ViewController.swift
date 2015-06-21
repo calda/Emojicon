@@ -9,12 +9,14 @@
 import UIKit
 import iAd
 
-let SHOW_HELP_POPUP = "SHOW_HELP_POPUP"
+let EIShowHelpPopupNotification = "com.cal.emojicon.show-help-popup"
+let EIChangeColorNotification = "com.cal.emojicon.change-color"
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ADBannerViewDelegate {
     
     var emojis : [String] = []
     var savedCells : [Int] = []
+    var currentColor : UIColor = UIColor.whiteColor()
     
     let about : [(emoji: String, text: String)] = [
         ("😀", "1️⃣ open emoji keyboard"),
@@ -27,18 +29,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var hiddenField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
-    let startColor = UIColor(hue: 0.0, saturation: 0.5, brightness: 0.7, alpha: 1.0).CGColor
-    let endColor = UIColor(hue: 0.5, saturation: 0.5, brightness: 0.7, alpha: 1.0).CGColor
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         hiddenField.becomeFirstResponder()
-        self.view.layer.backgroundColor = startColor
-        //animateBackground()
+        self.view.backgroundColor = UIColor(hue: 0.0, saturation: 0.6, brightness: 0.8, alpha: 1.0)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: SHOW_HELP_POPUP, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: EIShowHelpPopupNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "colorChanged:", name: EIChangeColorNotification, object: nil)
     }
     
     var keyboardHidden = false
@@ -71,21 +70,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
-    func updateContentInset() {
-        let contentInset = self.keyboardHeight + (adPosition.constant > 0 ? 50 : 0)
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, contentInset, 0.0)
+    func colorChanged(notification: NSNotification) {
+        if let color = notification.object as? UIColor {
+            currentColor = color
+            
+            for cell in tableView.visibleCells() {
+                if let cell = cell as? EmojiCell {
+                    cell.labelContainer.backgroundColor = color
+                }
+            }
+        }
     }
     
-    func animateBackground() {
-        UIView.animateWithDuration(15, animations: {
-                self.view.layer.backgroundColor = self.startColor
-            }, completion: { _ in
-                UIView.animateWithDuration(15, animations: {
-                    self.view.layer.backgroundColor = self.endColor
-                }, completion: { _ in
-                    self.animateBackground()
-                })
-        })
+    func updateContentInset() {
+        var originalInsets = tableView.contentInset
+        let contentInset = self.keyboardHeight + (adPosition.constant > 0 ? (adBanner.hidden ? 0 : 50) : 0)
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, contentInset, 0.0)
     }
     
     func showHelpPopup() {
@@ -122,6 +122,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func viewDidAppear(animated: Bool) {
+        if self.view.frame.height < 650 && animated == false {
+            tableView.setContentOffset(CGPointMake(0, 45), animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -133,9 +136,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //pragma MARK: - emoji inputs and table
     
     @IBAction func hiddenInputReceived(sender: UITextField, forEvent event: UIEvent) {
-        var emoji = sender.text.substringFromIndex(sender.text.endIndex.predecessor()) as NSString
+        let rawEmoji = sender.text
+        var emoji = rawEmoji as NSString
         
-        if emoji.length == 0 || emoji.length == 1 { return }
+        if emoji.length == 0 || emoji.length == 1 {
+            sender.text = ""
+            return
+        }
         
         if emoji.length > 1 {
             let char2 = emoji.characterAtIndex(1)
@@ -149,24 +156,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
         
-        emojis.insert(emoji as String, atIndex: 0)
-        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
-        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        emojis.insert(rawEmoji, atIndex: 0)
+        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
+        //tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        tableView.setContentOffset(CGPointMake(0, 45), animated: true) //show a little bit of the color picker but not much
         
         sender.text = ""
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("emojiCell") as! EmojiCell
         
-        if indexPath.item >= emojis.count {
-            let aboutText = about[indexPath.item - emojis.count]
+        //first is color picker
+        if indexPath.item == 0 {
+            return tableView.dequeueReusableCellWithIdentifier("colorCell", forIndexPath: indexPath) as! ColorPickerCell
+        }
+        
+        //everything else used Emoji Cell
+        let cell = tableView.dequeueReusableCellWithIdentifier("emojiCell") as! EmojiCell
+        cell.labelContainer.backgroundColor = currentColor
+        
+        if indexPath.item > emojis.count {
+            let aboutIndex = indexPath.item - emojis.count - 1
+            let aboutText = about[aboutIndex]
             cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text, isLast: aboutText.text.hasSuffix("anywhere"))
         }
         
         else {
-            cell.decorateCell(emojis[indexPath.item])
+            cell.decorateCell(emojis[indexPath.item - 1])
         }
         
         return cell
@@ -178,10 +195,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return emojis.count + about.count
+        return emojis.count + about.count + 1
     }
     
-    //pragma MAR: - ad delegate
+    //pragma MARK: - ad delegate
     
     @IBOutlet weak var adBanner: ADBannerView!
     @IBOutlet weak var adPosition: NSLayoutConstraint!
@@ -193,6 +210,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let aspect = self.view.frame.width / self.view.frame.height
         if aspect > 0.6 || aspect < 0.5 {
             println("iPhone 4S")
+            self.updateContentInset()
             adBanner.hidden = true
             return
         }

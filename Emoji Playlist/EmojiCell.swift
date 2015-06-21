@@ -76,7 +76,14 @@ class EmojiCell : UITableViewCell {
         UIGraphicsBeginImageContext(size.size)
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
+        let color: UIColor
+        if let background = self.labelContainer.backgroundColor {
+            color = background
+        } else {
+            color = UIColor.whiteColor()
+        }
+        
+        CGContextSetFillColorWithColor(context, color.CGColor)
         CGContextFillRect(context, size)
         CGContextSetAllowsAntialiasing(context, true)
         CGContextSetShouldAntialias(context, true)
@@ -103,7 +110,7 @@ class EmojiCell : UITableViewCell {
      //pragma MARK: - table cell functions
     
     @IBAction func showHelpPopup(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SHOW_HELP_POPUP, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(EIShowHelpPopupNotification, object: nil)
     }
     
     
@@ -145,6 +152,10 @@ class EmojiCell : UITableViewCell {
                     emojiName = flagName + " flag"
                 }
             }
+        }
+        
+        if emojiName == "" { //still nothing somehow
+            emojiName = "family" //can only be family as far as I know
         }
         
         decorateCell(emoji: emoji, text: emojiName, isLast: false)
