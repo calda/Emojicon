@@ -177,9 +177,6 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="7Jw-KG-xBU"/>
-                                                    <exclude reference="VRE-69-IPs"/>
-                                                    <exclude reference="yMr-1b-KN0"/>
                                                     <exclude reference="AEM-om-3Yf"/>
                                                     <exclude reference="QZU-u3-8tU"/>
                                                     <exclude reference="QeC-e1-LoD"/>
@@ -187,13 +184,18 @@
                                                     <exclude reference="bIf-N3-5Xk"/>
                                                     <exclude reference="g17-de-ZKU"/>
                                                     <exclude reference="ls8-31-6ok"/>
+                                                    <exclude reference="7Jw-KG-xBU"/>
+                                                    <exclude reference="VRE-69-IPs"/>
+                                                    <exclude reference="yMr-1b-KN0"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="clearIcon" destination="LmE-a9-A1u" id="YMP-m0-sxI"/>
                                             <outlet property="clearLeading" destination="egp-cm-35G" id="tFb-Xm-UDC"/>
+                                            <outlet property="collectionView" destination="eYG-He-zhk" id="kh1-kz-Avb"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="emojiCell" rowHeight="60" id="oso-jA-woX" customClass="EmojiCell" customModule="Emojicon" customModuleProvider="target">
@@ -401,6 +403,21 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="Kol-io-0RL"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPw-A8-Ubs">
+                                <rect key="frame" x="16" y="642" width="382" height="44"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="0qf-Ax-mjH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="show keyboard">
+                                    <color key="titleColor" red="0.67708075050000005" green="0.67706048490000004" blue="0.67707198859999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showKeyboard" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jzH-XO-eqi"/>
+                                </connections>
+                            </button>
                             <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sLf-2O-1Vc">
                                 <rect key="frame" x="0.0" y="736" width="414" height="50"/>
                                 <animations/>
@@ -421,10 +438,13 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="NPw-A8-Ubs" secondAttribute="trailing" id="5w6-Sl-bYe"/>
                             <constraint firstItem="cGL-ti-PwL" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="6pC-aA-Uyg"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="NPw-A8-Ubs" secondAttribute="bottom" constant="50" id="7st-O2-iAR"/>
                             <constraint firstAttribute="trailing" secondItem="cGL-ti-PwL" secondAttribute="trailing" id="829-pf-vPO"/>
                             <constraint firstAttribute="bottomMargin" secondItem="sLf-2O-1Vc" secondAttribute="bottom" constant="-50" id="Ch3-FC-yY0"/>
                             <constraint firstItem="eMG-TM-eUO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="EW4-ED-vQF"/>
+                            <constraint firstItem="NPw-A8-Ubs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="KyV-Tw-kP2"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="sLf-2O-1Vc" secondAttribute="bottom" id="MKz-Kj-MEx"/>
                             <constraint firstItem="eMG-TM-eUO" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="-30" id="RpU-aV-yKw"/>
                             <constraint firstItem="eMG-TM-eUO" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="SVU-jh-PiX"/>
@@ -444,6 +464,7 @@
                         <outlet property="adBanner" destination="sLf-2O-1Vc" id="AvY-E9-s9u"/>
                         <outlet property="adPosition" destination="Ch3-FC-yY0" id="q3Q-sL-Lb7"/>
                         <outlet property="hiddenField" destination="eMG-TM-eUO" id="fhu-0f-d3g"/>
+                        <outlet property="showKeyboardButton" destination="NPw-A8-Ubs" id="1JN-SM-ywm"/>
                         <outlet property="tableView" destination="cGL-ti-PwL" id="hHv-wt-CuD"/>
                     </connections>
                 </viewController>

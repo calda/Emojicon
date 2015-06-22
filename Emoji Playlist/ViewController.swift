@@ -11,6 +11,7 @@ import iAd
 
 let EIShowHelpPopupNotification = "com.cal.emojicon.show-help-popup"
 let EIChangeColorNotification = "com.cal.emojicon.change-color"
+let EIShowKeyboardNotification = "com.cal.emojicon.show-keyboard"
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ADBannerViewDelegate {
     
@@ -28,16 +29,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var hiddenField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var showKeyboardButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        hiddenField.becomeFirstResponder()
         self.view.backgroundColor = UIColor(hue: 0.0, saturation: 0.6, brightness: 0.8, alpha: 1.0)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: EIShowHelpPopupNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "colorChanged:", name: EIChangeColorNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard", name: EIShowKeyboardNotification, object: nil)
+        
+        showKeyboardButton.alpha = 0.0
+        UIView.animateWithDuration(0.5, delay: 1.0, options: nil, animations: {
+                self.showKeyboardButton.alpha = 1.0
+            }, completion: nil)
+    }
+    
+    @IBAction func showKeyboard() { //called from app delegate or UIButton
+        hiddenField.becomeFirstResponder()
     }
     
     var keyboardHidden = false
@@ -77,6 +88,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             for cell in tableView.visibleCells() {
                 if let cell = cell as? EmojiCell {
                     cell.labelContainer.backgroundColor = color
+                    cell.switchBackToDownloadButton()
                 }
             }
         }

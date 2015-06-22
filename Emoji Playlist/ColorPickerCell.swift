@@ -15,26 +15,52 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     var brightness: CGFloat = 0.9
     var cellMap = ["plus", "minus"]
     var currentColor: UIColor?
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var clearLeading: NSLayoutConstraint!
+    @IBOutlet weak var clearIcon: UIImageView!
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20 + cellMap.count
+        return 21 + (cellMap.count * 2)
     }
     
     func colorForIndex(indexPath: NSIndexPath) -> UIColor {
         let hue = CGFloat(Double(indexPath.item - cellMap.count) * 0.0473)
-        let color = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
+        
+        let sat: CGFloat
+        let bright: CGFloat
+        
+        if indexPath.item == 20 + cellMap.count { //is black cell
+            sat = 0.0
+            bright = 1.0 - saturation
+        } else {
+            sat = saturation
+            bright = brightness
+        }
+        
+        let color = UIColor(hue: hue, saturation: sat, brightness: bright, alpha: 1.0)
         return color
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func cellTypeForIndex(indexPath: NSIndexPath) -> String {
         if indexPath.item < cellMap.count {
-            return collectionView.dequeueReusableCellWithReuseIdentifier(cellMap[indexPath.item], forIndexPath: indexPath) as! UICollectionViewCell
+            return cellMap[indexPath.item]
+        } else if indexPath.item > (20 + cellMap.count) {
+            return cellMap[indexPath.item - (21 + cellMap.count)]
+        } else { return "color" }
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    
+        let cellType = cellTypeForIndex(indexPath)
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellType, forIndexPath: indexPath) as! UICollectionViewCell
+        
+        if cellType == "color" {
+            cell.backgroundColor = colorForIndex(indexPath)
         }
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("color", forIndexPath: indexPath) as! UICollectionViewCell
-        cell.backgroundColor = colorForIndex(indexPath)
         return cell
+        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -59,35 +85,29 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let index = indexPath.item
         
-        if index >= cellMap.count {
+        let cellType = cellTypeForIndex(indexPath)
+        
+        if cellType == "color" {
             colorTap(collectionView, indexPath: indexPath)
-            return
         }
-        
-        let cell = cellMap[index]
-        
-        if cell == "plus" {
+        else if cellType == "plus" {
             plusTap(collectionView)
         }
-        else if cell == "minus" {
+        else if cellType == "minus" {
             minusTap(collectionView)
         }
     }
     
     func plusTap(collectionView: UICollectionView) {
         saturation += 0.1
-        //brightness += 0.1
         saturation = min(saturation, 0.8)
-        brightness = min(brightness, 1.0)
         collectionView.reloadData()
         updateSelectedColor()
     }
     
     func minusTap(collectionView: UICollectionView) {
         saturation -= 0.1
-        //brightness -= 0.1
         saturation = max(saturation, 0.0)
-        brightness = max(brightness, 0.2)
         collectionView.reloadData()
         updateSelectedColor()
     }
@@ -97,19 +117,39 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
         currentColor = nil
         NSNotificationCenter.defaultCenter().postNotificationName(EIChangeColorNotification, object: UIColor.whiteColor(), userInfo: nil)
         
+        //make sure the plus/minus controls always stay visible
+        let newContentOffset: CGPoint
+        
+        if collectionView.contentOffset.x > (collectionView.frame.height * 2.0) {
+            newContentOffset = CGPointMake(collectionView.contentOffset.x - collectionView.frame.height, 0.0)
+        } else {
+            newContentOffset = collectionView.contentOffset
+        }
+        
         //animate
         clearLeading.constant = -self.frame.height
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
             self.layoutIfNeeded()
-            }, completion: nil)
+            self.clearIcon.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 4.0))
+            self.collectionView.contentOffset = newContentOffset
+        }, completion: nil)
     }
     
     func updateSelectedColor() {
         if let currentColor = currentColor {
             var hue: CGFloat = 0.0
-            currentColor.getHue(&hue, saturation: nil, brightness: nil, alpha: nil)
+            var sat: CGFloat = 0.0
+            var bright: CGFloat = 0.0
+            currentColor.getHue(&hue, saturation: &sat, brightness: nil, alpha: nil)
             
-            let newColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
+            if sat != 0.0 { //if is not black
+                sat = saturation
+                bright = brightness
+            } else { //if is black
+                bright = 1.0 - saturation
+            }
+            
+            let newColor = UIColor(hue: hue, saturation: sat, brightness: bright, alpha: 1.0)
             self.currentColor = newColor
             NSNotificationCenter.defaultCenter().postNotificationName(EIChangeColorNotification, object: newColor, userInfo: nil)
         }
@@ -123,9 +163,21 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
         //animate
         if currentColor == nil {
             clearLeading.constant = 0
-            UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: nil, animations: {
-                    self.layoutIfNeeded()
-                }, completion: nil)
+            self.clearIcon.transform = CGAffineTransformMakeRotation(CGFloat(3.0 * M_PI/4.0))
+            
+            let newContentOffset: CGPoint
+            //make sure the plus/minus controls always stay visible
+            if collectionView.contentOffset.x > (collectionView.frame.height * 2.0) {
+                newContentOffset = CGPointMake(collectionView.contentOffset.x + collectionView.frame.height, 0.0)
+            } else {
+                newContentOffset = collectionView.contentOffset
+            }
+            
+            UIView.animateWithDuration(0.45, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: nil, animations: {
+                self.layoutIfNeeded()
+                self.clearIcon.transform = CGAffineTransformMakeRotation(0.0)
+                collectionView.contentOffset = newContentOffset
+            }, completion: nil)
         }
         
         currentColor = newColor

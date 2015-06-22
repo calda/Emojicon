@@ -70,7 +70,17 @@ class EmojiCell : UITableViewCell {
         })
     }
     
-    
+    func switchBackToDownloadButton() {
+        if whatsNext.hidden == false || saveButton.hidden == false {
+            whatsNext.hidden = true
+            saveButton.hidden = false
+            saveButton.enabled = true
+            saveTarget.hidden = false
+            saveTarget.enabled = true
+            savedDisplay.alpha = 0.0
+        }
+    }
+        
     func getEmojiImage() -> UIImage {
         let size = CGRectMake(0.0, 0.0, 500.0, 500.0)
         UIGraphicsBeginImageContext(size.size)
@@ -149,6 +159,11 @@ class EmojiCell : UITableViewCell {
                         let splitNS = split.uppercaseString as NSString
                         flagName += splitNS.substringFromIndex(splitNS.length - 1)
                     }
+                    
+                    if let countryName = countryNameForCode(flagName){
+                        flagName = countryName
+                    }
+                    
                     emojiName = flagName + " flag"
                 }
             }
