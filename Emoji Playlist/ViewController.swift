@@ -12,6 +12,7 @@ import iAd
 let EIShowHelpPopupNotification = "com.cal.emojicon.show-help-popup"
 let EIChangeColorNotification = "com.cal.emojicon.change-color"
 let EIShowKeyboardNotification = "com.cal.emojicon.show-keyboard"
+let EIHideAdNotification = "com.cal.emojicon.hide-ad"
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ADBannerViewDelegate {
     
@@ -40,6 +41,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: EIShowHelpPopupNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "colorChanged:", name: EIChangeColorNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard", name: EIShowKeyboardNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideAd", name: EIHideAdNotification, object: nil)
         
         showKeyboardButton.alpha = 0.0
         UIView.animateWithDuration(0.5, delay: 1.0, options: nil, animations: {
@@ -49,6 +51,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func showKeyboard() { //called from app delegate or UIButton
         hiddenField.becomeFirstResponder()
+        UIView.animateWithDuration(0.3, animations: {
+            self.adBanner.alpha = 1.0
+            self.showKeyboardButton.alpha = 1.0
+        })
+    }
+    
+    func hideAd() {
+        self.adBanner.alpha = 0.0
+        showKeyboardButton.alpha = 0.0
     }
     
     var keyboardHidden = false

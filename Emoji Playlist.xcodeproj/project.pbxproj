@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		2E0BBC331B38A43200513D11 /* CountryCodeLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0BBC321B38A43200513D11 /* CountryCodeLookup.swift */; };
 		2E6B94A21B18DBB400115D90 /* s3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A11B18DBB400115D90 /* s3.png */; };
-		2E6B94A41B18DBC100115D90 /* s1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A31B18DBC100115D90 /* s1.png */; };
+		2E6B94A41B18DBC100115D90 /* s2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A31B18DBC100115D90 /* s2.png */; };
 		2E6B94A61B18DBE300115D90 /* s0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A51B18DBE300115D90 /* s0.png */; };
 		2E6B94A81B18DBEE00115D90 /* s4.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A71B18DBEE00115D90 /* s4.png */; };
-		2E6B94AA1B18DBFF00115D90 /* s2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A91B18DBFF00115D90 /* s2.png */; };
+		2E6B94AA1B18DBFF00115D90 /* s1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E6B94A91B18DBFF00115D90 /* s1.png */; };
 		2E94C0221B36133B00E36032 /* ColorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E94C0211B36133B00E36032 /* ColorPickerCell.swift */; };
 		2EFE4B101B361F2D00AFA27A /* Plus Math-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EFE4B0F1B361F2D00AFA27A /* Plus Math-100.png */; };
 		2EFE4B121B361F3000AFA27A /* Minus Math-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EFE4B111B361F3000AFA27A /* Minus Math-100.png */; };
@@ -32,11 +32,10 @@
 /* Begin PBXFileReference section */
 		2E0BBC321B38A43200513D11 /* CountryCodeLookup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodeLookup.swift; sourceTree = "<group>"; };
 		2E6B94A11B18DBB400115D90 /* s3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s3.png; sourceTree = "<group>"; };
-		2E6B94A31B18DBC100115D90 /* s1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s1.png; sourceTree = "<group>"; };
+		2E6B94A31B18DBC100115D90 /* s2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s2.png; sourceTree = "<group>"; };
 		2E6B94A51B18DBE300115D90 /* s0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s0.png; sourceTree = "<group>"; };
 		2E6B94A71B18DBEE00115D90 /* s4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s4.png; sourceTree = "<group>"; };
-		2E6B94A91B18DBFF00115D90 /* s2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s2.png; sourceTree = "<group>"; };
-		2E94C0201B36112900E36032 /* Emojicon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Emojicon.entitlements; sourceTree = "<group>"; };
+		2E6B94A91B18DBFF00115D90 /* s1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = s1.png; sourceTree = "<group>"; };
 		2E94C0211B36133B00E36032 /* ColorPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerCell.swift; sourceTree = "<group>"; };
 		2EFE4B0F1B361F2D00AFA27A /* Plus Math-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Plus Math-100.png"; sourceTree = "<group>"; };
 		2EFE4B111B361F3000AFA27A /* Minus Math-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Minus Math-100.png"; sourceTree = "<group>"; };
@@ -72,7 +71,6 @@
 		44F46F641ADD3DEB00F46BA2 = {
 			isa = PBXGroup;
 			children = (
-				2E94C0201B36112900E36032 /* Emojicon.entitlements */,
 				443D91FF1AF14DBE00EFDD3A /* iAd.framework */,
 				44F46F6F1ADD3DEB00F46BA2 /* Emoji Playlist */,
 				44F46F851ADD3DEB00F46BA2 /* Emoji PlaylistTests */,
@@ -110,8 +108,8 @@
 			children = (
 				2E0BBC321B38A43200513D11 /* CountryCodeLookup.swift */,
 				2E6B94A51B18DBE300115D90 /* s0.png */,
-				2E6B94A31B18DBC100115D90 /* s1.png */,
-				2E6B94A91B18DBFF00115D90 /* s2.png */,
+				2E6B94A91B18DBFF00115D90 /* s1.png */,
+				2E6B94A31B18DBC100115D90 /* s2.png */,
 				2E6B94A11B18DBB400115D90 /* s3.png */,
 				2E6B94A71B18DBEE00115D90 /* s4.png */,
 				44F46F711ADD3DEB00F46BA2 /* Info.plist */,
@@ -206,7 +204,7 @@
 			files = (
 				2E6B94A61B18DBE300115D90 /* s0.png in Resources */,
 				2EFE4B121B361F3000AFA27A /* Minus Math-100.png in Resources */,
-				2E6B94AA1B18DBFF00115D90 /* s2.png in Resources */,
+				2E6B94AA1B18DBFF00115D90 /* s1.png in Resources */,
 				44F46F781ADD3DEB00F46BA2 /* Main.storyboard in Resources */,
 				44C877711AFA893B00EB5BC1 /* iphone cutout.png in Resources */,
 				2EFE4B161B3622D400AFA27A /* Delete Sign-100(1).png in Resources */,
@@ -214,7 +212,7 @@
 				2E6B94A81B18DBEE00115D90 /* s4.png in Resources */,
 				44F46F7D1ADD3DEB00F46BA2 /* LaunchScreen.xib in Resources */,
 				2E6B94A21B18DBB400115D90 /* s3.png in Resources */,
-				2E6B94A41B18DBC100115D90 /* s1.png in Resources */,
+				2E6B94A41B18DBC100115D90 /* s2.png in Resources */,
 				44F46F7A1ADD3DEB00F46BA2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
