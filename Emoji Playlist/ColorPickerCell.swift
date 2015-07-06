@@ -11,6 +11,7 @@ import UIKit
 
 class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
+    var beingDisplayed: Bool = false
     var saturation: CGFloat = 0.7
     var brightness: CGFloat = 0.9
     var cellMap = ["plus", "minus"]
@@ -20,6 +21,9 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     @IBOutlet weak var clearIcon: UIImageView!
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if beingDisplayed {
+            collectionView.contentOffset = CGPointMake(collectionView.frame.height * 2, 0)
+        }
         return 21 + (cellMap.count * 2)
     }
     

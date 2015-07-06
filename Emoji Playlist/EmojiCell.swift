@@ -120,7 +120,7 @@ class EmojiCell : UITableViewCell {
      //pragma MARK: - table cell functions
     
     @IBAction func showHelpPopup(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotificationName(EIShowHelpPopupNotification, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(EIShowHelpPopupNotification, object: thenWhatButton)
     }
     
     

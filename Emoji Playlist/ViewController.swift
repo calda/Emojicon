@@ -21,11 +21,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var currentColor : UIColor = UIColor.whiteColor()
     
     let about : [(emoji: String, text: String)] = [
+        ("", "how to use Emojicon"),
         ("😀", "1️⃣ open emoji keyboard"),
-        ("👇🏻", "2️⃣ type emoji"),
-        ("📲", "3️⃣ save to camera roll"),
-        ("🌐", "4️⃣ use it anywhere"),
-        ("🙏🏻", "5️⃣ nice!")
+        ("👇", "2️⃣ type emoji"),
+        ("🎨", "3️⃣ choose background color 🔝"),
+        ("📲", "4️⃣ save to camera roll"),
+        ("🌐", "5️⃣ use it anywhere"),
+        ("🙏", "6️⃣ nice!")
     ]
     
     @IBOutlet weak var hiddenField: UITextField!
@@ -38,7 +40,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup", name: EIShowHelpPopupNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup:", name: EIShowHelpPopupNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "colorChanged:", name: EIChangeColorNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard", name: EIShowKeyboardNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideAd", name: EIHideAdNotification, object: nil)
@@ -93,6 +95,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func colorChanged(notification: NSNotification) {
+        //scroll it to the top
+        self.tableView.setContentOffset(CGPointZero, animated: true)
+        
         if let color = notification.object as? UIColor {
             currentColor = color
             
@@ -109,14 +114,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var originalInsets = tableView.contentInset
         let contentInset = self.keyboardHeight + (adPosition.constant > 0 ? (adBanner.hidden ? 0 : 50) : 0)
         tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, contentInset, 0.0)
+        tableView.scrollIndicatorInsets = tableView.contentInset
     }
     
-    func showHelpPopup() {
+    func showHelpPopup(notification: NSNotification) {
         let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") as! UIViewController
         
         let nav = LightNavigation(rootViewController: popup)
         nav.navigationBar.translucent = false
         popup.view.frame = CGRectMake(0, 0, -44, self.view.bounds.size.height)
+        
+        if let presentation = nav.presentationController as? UIPopoverPresentationController, source = notification.object as? UIView {
+            presentation.sourceView = source
+        }
         
         let closeButton = UIBarButtonItem(title: "got it", style: UIBarButtonItemStyle.Plain, target: self, action: "closeHelpPopup")
         closeButton.tintColor = UIColor.whiteColor()
@@ -145,7 +155,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func viewDidAppear(animated: Bool) {
-        if self.view.frame.height < 650 && animated == false {
+        if self.view.frame.height < 700 && animated == false {
             tableView.setContentOffset(CGPointMake(0, 45), animated: true)
         }
     }
@@ -164,6 +174,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if emoji.length == 0 || emoji.length == 1 {
             sender.text = ""
+            //show an alert
+            let alert = UIAlertController(title: "Open the Emoji Keyboard", message: "😀😁😂😃😄😅😆😇", preferredStyle: .Alert)
+            let ok = UIAlertAction(title: "ok", style: .Default, handler: nil)
+            alert.addAction(ok)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
             return
         }
         
@@ -182,7 +198,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         emojis.insert(rawEmoji, atIndex: 0)
         tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
         //tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
-        tableView.setContentOffset(CGPointMake(0, 45), animated: true) //show a little bit of the color picker but not much
+        let contentHeight = tableView.contentSize.height
+        
+        var availableHeight = self.view.frame.height - 20.0
+        availableHeight -= keyboardHeight
+        if adPosition.constant > 0 {
+            availableHeight -= adBanner.frame.height
+        }
+        
+        if contentHeight > availableHeight {
+            tableView.setContentOffset(CGPointMake(0, 45), animated: true) //show a little bit of the color picker but not much
+        }
+        
         
         sender.text = ""
     }
@@ -192,7 +219,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //first is color picker
         if indexPath.item == 0 {
-            return tableView.dequeueReusableCellWithIdentifier("colorCell", forIndexPath: indexPath) as! ColorPickerCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("colorCell", forIndexPath: indexPath) as! ColorPickerCell
+            cell.beingDisplayed = true
+            let collection = cell.collectionView
+            collection.contentOffset = CGPointMake(cell.frame.height * 2, 0)
+            delay(0.3) {
+                cell.beingDisplayed = false
+            }
+            return cell
         }
         
         //everything else used Emoji Cell
@@ -202,6 +236,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if indexPath.item > emojis.count {
             let aboutIndex = indexPath.item - emojis.count - 1
             let aboutText = about[aboutIndex]
+            
+            if aboutText.text == "how to use Emojicon" {
+                return tableView.dequeueReusableCellWithIdentifier("instructions") as! UITableViewCell
+            }
+            
             cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text, isLast: aboutText.text.hasSuffix("anywhere"))
         }
         
@@ -214,6 +253,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.item > emojis.count {
+            let aboutIndex = indexPath.item - emojis.count - 1
+            let aboutText = about[aboutIndex]
+            
+            if aboutText.text == "how to use Emojicon" {
+                return 30
+            }
+        }
+            
         return 60
     }
     
@@ -231,8 +279,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //do not show ad if 4S (aspect != 9:16) (9/16 = 0.5625)
         let aspect = self.view.frame.width / self.view.frame.height
-        if aspect > 0.6 || aspect < 0.5 {
-            println("iPhone 4S")
+        if (aspect > 0.6 || aspect < 0.5) && (self.view.frame.height < 800.0) {
             self.updateContentInset()
             adBanner.hidden = true
             return
@@ -240,7 +287,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if adPosition.constant != keyboardHeight {
             adPosition.constant = keyboardHeight
-            UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+            UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
                     self.view.layoutIfNeeded()
                 }, completion: { success in
                     self.updateContentInset()
@@ -250,14 +297,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        adPosition.constant = -50
-        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: { success in
+        adPosition.constant = -banner.frame.height
+        UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: { success in
                 self.updateContentInset()
         })
     }
     
     func keyboardHidden(hidden: Bool) {
-        adPosition.constant = (hidden ? -50 : keyboardHeight)
+        adPosition.constant = (hidden ? -adBanner.frame.height : keyboardHeight)
         UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
     }
     
@@ -267,7 +314,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
-        self.adPosition.constant = -55
+        self.adPosition.constant = -banner.frame.height
         self.view.layoutIfNeeded()
         self.hiddenField.becomeFirstResponder()
     }
