@@ -75,6 +75,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
         self.keyboardHeight = keyboardFrame.height
         
+        updateContentInset()
+        
         if !adBanner.bannerLoaded {
             //ad is not on screen
             keyboardHidden = false
@@ -82,7 +84,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         adPosition.constant = keyboardHeight
-        updateContentInset()
         
         if keyboardHidden {
             UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
