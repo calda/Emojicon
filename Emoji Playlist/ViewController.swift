@@ -26,8 +26,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         ("👇", "2️⃣ type emoji"),
         ("🎨", "3️⃣ choose background color 🔝"),
         ("📲", "4️⃣ save to camera roll"),
-        ("🌐", "5️⃣ use it anywhere"),
-        ("🙏", "6️⃣ nice!")
+        ("🌐", "5️⃣ use it anywhere")
     ]
     
     @IBOutlet weak var hiddenField: UITextField!
@@ -133,7 +132,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         closeButton.tintColor = UIColor.whiteColor()
         popup.navigationItem.rightBarButtonItem = closeButton
         
-        popup.navigationController?.navigationBar.barTintColor = UIColor(hue: 0.0, saturation: 0.5, brightness: 0.7, alpha: 1.0)
+        popup.navigationController?.navigationBar.barTintColor = self.view.backgroundColor
         let font = UIFont(name: "HelveticaNeue-Light", size: 25.0)!
         popup.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : font, NSForegroundColorAttributeName : UIColor.whiteColor()]
         
@@ -156,9 +155,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     override func viewDidAppear(animated: Bool) {
-        if self.view.frame.height < 700 && animated == false {
-            tableView.setContentOffset(CGPointMake(0, 45), animated: true)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -197,7 +193,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         emojis.insert(rawEmoji, atIndex: 0)
-        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
+        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 2, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Right)
         //tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
         let contentHeight = tableView.contentSize.height
         
@@ -208,7 +204,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         if contentHeight > availableHeight {
-            tableView.setContentOffset(CGPointMake(0, 45), animated: true) //show a little bit of the color picker but not much
+            tableView.setContentOffset(CGPointMake(0, 0), animated: true)
         }
         
         
@@ -218,8 +214,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        //first is color picker
+        //first is color picker title, then picker itself
         if indexPath.item == 0 {
+            return tableView.dequeueReusableCellWithIdentifier("backgroundTitle") as! UITableViewCell
+        }
+        
+        if indexPath.item == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("colorCell", forIndexPath: indexPath) as! ColorPickerCell
             cell.beingDisplayed = true
             let collection = cell.collectionView
@@ -234,8 +234,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCellWithIdentifier("emojiCell") as! EmojiCell
         cell.labelContainer.backgroundColor = currentColor
         
-        if indexPath.item > emojis.count {
-            let aboutIndex = indexPath.item - emojis.count - 1
+        if indexPath.item > emojis.count + 1 {
+            let aboutIndex = indexPath.item - emojis.count - 2
             let aboutText = about[aboutIndex]
             
             if aboutText.text == "how to use Emojicon" {
@@ -246,7 +246,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         
         else {
-            cell.decorateCell(emojis[indexPath.item - 1])
+            cell.decorateCell(emojis[indexPath.item - 2])
         }
         
         return cell
@@ -254,20 +254,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.item > emojis.count {
-            let aboutIndex = indexPath.item - emojis.count - 1
+        if indexPath.item > emojis.count + 1 {
+            let aboutIndex = indexPath.item - emojis.count - 2
             let aboutText = about[aboutIndex]
             
             if aboutText.text == "how to use Emojicon" {
                 return 30
             }
         }
+        
+        if indexPath.item == 0 { //is top cell, "background color" title
+            return 30
+        }
             
         return 60
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return emojis.count + about.count + 1
+        return emojis.count + about.count + 2
     }
     
     //pragma MARK: - ad delegate

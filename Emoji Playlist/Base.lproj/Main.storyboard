@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A216g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -38,6 +38,52 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.64770430326461792" green="0.062352947890758514" blue="0.1421964168548584" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="backgroundTitle" rowHeight="30" id="40G-bo-Vbs">
+                                        <rect key="frame" x="0.0" y="82" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="40G-bo-Vbs" id="MFj-qI-9ZH">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="background color" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="cnE-Ho-cpH">
+                                                    <rect key="frame" x="8" y="0.0" width="114" height="29"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tap color to select" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="d9W-S8-duN">
+                                                    <rect key="frame" x="289" y="0.0" width="117" height="29"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.30502041903409094" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" white="0.96621093749999998" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="cnE-Ho-cpH" secondAttribute="bottom" id="6Oc-6D-s6c"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="d9W-S8-duN" secondAttribute="trailing" id="72r-6n-11z"/>
+                                                <constraint firstAttribute="bottom" secondItem="d9W-S8-duN" secondAttribute="bottom" id="Ber-aN-bVk"/>
+                                                <constraint firstItem="cnE-Ho-cpH" firstAttribute="leading" secondItem="MFj-qI-9ZH" secondAttribute="leadingMargin" id="HMn-k1-2Zi"/>
+                                                <constraint firstAttribute="trailing" secondItem="d9W-S8-duN" secondAttribute="trailing" constant="10" id="YB1-s1-G9I"/>
+                                                <constraint firstItem="cnE-Ho-cpH" firstAttribute="top" secondItem="MFj-qI-9ZH" secondAttribute="top" id="Z3X-qW-FGp"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="cnE-Ho-cpH" secondAttribute="bottom" id="Z9u-hh-nxX"/>
+                                                <constraint firstItem="cnE-Ho-cpH" firstAttribute="top" secondItem="MFj-qI-9ZH" secondAttribute="topMargin" id="hVx-WH-6nr"/>
+                                                <constraint firstItem="d9W-S8-duN" firstAttribute="top" secondItem="MFj-qI-9ZH" secondAttribute="top" id="lAT-ug-eDX"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Z9u-hh-nxX"/>
+                                                    <exclude reference="hVx-WH-6nr"/>
+                                                    <exclude reference="YB1-s1-G9I"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.77792968750000002" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="colorCell" rowHeight="60" id="gvJ-jn-73m" userLabel="color picker cell" customClass="ColorPickerCell" customModule="Emojicon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -205,11 +251,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="how to use Emojicon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="6zm-VV-iQQ">
-                                                    <rect key="frame" x="8" y="8" width="135" height="13"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="how to use Emojicon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="2" translatesAutoresizingMaskIntoConstraints="NO" id="6zm-VV-iQQ">
+                                                    <rect key="frame" x="8" y="0.0" width="135" height="29"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -218,8 +264,16 @@
                                             <constraints>
                                                 <constraint firstItem="6zm-VV-iQQ" firstAttribute="leading" secondItem="Xgv-P3-dxm" secondAttribute="leadingMargin" id="Aiw-gX-J2a"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="6zm-VV-iQQ" secondAttribute="bottom" id="XnG-7d-TTp"/>
+                                                <constraint firstItem="6zm-VV-iQQ" firstAttribute="top" secondItem="Xgv-P3-dxm" secondAttribute="top" id="eRR-64-1n9"/>
+                                                <constraint firstAttribute="bottom" secondItem="6zm-VV-iQQ" secondAttribute="bottom" id="eWi-D4-w3C"/>
                                                 <constraint firstItem="6zm-VV-iQQ" firstAttribute="top" secondItem="Xgv-P3-dxm" secondAttribute="topMargin" id="foA-tm-yk9"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="XnG-7d-TTp"/>
+                                                    <exclude reference="foA-tm-yk9"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <color key="backgroundColor" white="0.77792968750000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -279,9 +333,9 @@
                                                     </state>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="o8W-aI-MtJ"/>
                                                             <exclude reference="bQu-kx-iFo"/>
                                                             <exclude reference="ds0-wf-LbS"/>
+                                                            <exclude reference="o8W-aI-MtJ"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
@@ -403,8 +457,8 @@
                                                 <mask key="constraints">
                                                     <exclude reference="7zQ-Ql-o7Y"/>
                                                     <exclude reference="POE-RS-mYZ"/>
-                                                    <exclude reference="yPd-p5-naQ"/>
                                                     <exclude reference="GFU-H0-w44"/>
+                                                    <exclude reference="yPd-p5-naQ"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

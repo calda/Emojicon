@@ -15,7 +15,7 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     var saturation: CGFloat = 0.7
     var brightness: CGFloat = 0.9
     var cellMap = ["plus", "minus"]
-    var currentColor: UIColor?
+    var currentColor: UIColor = UIColor.whiteColor()
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var clearLeading: NSLayoutConstraint!
     @IBOutlet weak var clearIcon: UIImageView!
@@ -118,7 +118,7 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     
     @IBAction func clearTap(sender: AnyObject) {
         //send notification
-        currentColor = nil
+        currentColor = UIColor.whiteColor()
         NSNotificationCenter.defaultCenter().postNotificationName(EIChangeColorNotification, object: UIColor.whiteColor(), userInfo: nil)
         
         //make sure the plus/minus controls always stay visible
@@ -140,23 +140,21 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     }
     
     func updateSelectedColor() {
-        if let currentColor = currentColor {
-            var hue: CGFloat = 0.0
-            var sat: CGFloat = 0.0
-            var bright: CGFloat = 0.0
-            currentColor.getHue(&hue, saturation: &sat, brightness: nil, alpha: nil)
-            
-            if sat != 0.0 { //if is not black
-                sat = saturation
-                bright = brightness
-            } else { //if is black
-                bright = 1.0 - saturation
-            }
-            
-            let newColor = UIColor(hue: hue, saturation: sat, brightness: bright, alpha: 1.0)
-            self.currentColor = newColor
-            NSNotificationCenter.defaultCenter().postNotificationName(EIChangeColorNotification, object: newColor, userInfo: nil)
+        var hue: CGFloat = 0.0
+        var sat: CGFloat = 0.0
+        var bright: CGFloat = 0.0
+        currentColor.getHue(&hue, saturation: &sat, brightness: nil, alpha: nil)
+        
+        if sat != 0.0 { //if is not black
+            sat = saturation
+            bright = brightness
+        } else { //if is black
+            bright = 1.0 - saturation
         }
+        
+        let newColor = UIColor(hue: hue, saturation: sat, brightness: bright, alpha: 1.0)
+        self.currentColor = newColor
+        NSNotificationCenter.defaultCenter().postNotificationName(EIChangeColorNotification, object: newColor, userInfo: nil)
     }
     
     func colorTap(collectionView: UICollectionView, indexPath: NSIndexPath) {
@@ -165,7 +163,7 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
         NSNotificationCenter.defaultCenter().postNotificationName(EIChangeColorNotification, object: newColor, userInfo: nil)
         
         //animate
-        if currentColor == nil {
+        if currentColor == UIColor.whiteColor() {
             clearLeading.constant = 0
             self.clearIcon.transform = CGAffineTransformMakeRotation(CGFloat(3.0 * M_PI/4.0))
             
