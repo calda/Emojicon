@@ -45,7 +45,7 @@ class EmojiCell : UITableViewCell {
     func playSaveAnimation() {
         savedLeading.constant = 0
         savedDisplay.alpha = 1.0
-        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             self.layoutIfNeeded()
             }, completion: { success in
                 
@@ -59,7 +59,7 @@ class EmojiCell : UITableViewCell {
                 self.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
                 
                 self.savedLeading.constant = -375
-                UIView.animateWithDuration(1.0, delay: 1.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+                UIView.animateWithDuration(1.0, delay: 1.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
                     self.layoutIfNeeded()
                     self.savedDisplay.alpha = 0.0
                     }, completion: { success in
@@ -129,16 +129,16 @@ class EmojiCell : UITableViewCell {
         
         let cfstring = NSMutableString(string: emoji) as CFMutableString
         var range = CFRangeMake(0, CFStringGetLength(cfstring))
-        CFStringTransform(cfstring, &range, kCFStringTransformToUnicodeName, 0)
+        CFStringTransform(cfstring, &range, kCFStringTransformToUnicodeName, false)
         let capitalName = "\(cfstring)"
         
         if !capitalName.hasPrefix("\\") { //is number emoji
-            var splits = split(capitalName){ $0 == "\\" }
+            var splits = capitalName.characters.split{ $0 == "\\" }.map { String($0) }
             emojiName = ((capitalName as NSString).length > 1 ? "keycap " : "") + splits[0]
         }
         
         else {
-            var splits = split(capitalName){ $0 == "}" }
+            var splits = capitalName.characters.split{ $0 == "}" }.map { String($0) }
             for i in 0..<splits.count {
                 if (splits[i] as NSString).length > 3 {
                     splits[i] = (splits[i] as NSString).substringFromIndex(3).lowercaseString
@@ -182,7 +182,7 @@ class EmojiCell : UITableViewCell {
     }
     
     
-    func decorateCell(#emoji: String, text: String, isLast: Bool) {
+    func decorateCell(emoji emoji: String, text: String, isLast: Bool) {
         nameLabel.text = text
         emojiDisplay.text = emoji
         

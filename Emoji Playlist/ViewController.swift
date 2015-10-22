@@ -32,6 +32,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var hiddenField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var showKeyboardButton: UIButton!
+    @IBOutlet weak var openKeyboardView: UIView!
+    @IBOutlet weak var openKeyboardPosition: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +46,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard", name: EIShowKeyboardNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideAd", name: EIHideAdNotification, object: nil)
         
+        self.openKeyboardView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        self.openKeyboardView.layer.cornerRadius = 20.0
+        self.openKeyboardView.layer.masksToBounds = true
+        
         showKeyboardButton.alpha = 0.0
-        UIView.animateWithDuration(0.5, delay: 1.0, options: nil, animations: {
+        UIView.animateWithDuration(0.5, delay: 1.0, options: [], animations: {
                 self.showKeyboardButton.alpha = 1.0
-            }, completion: nil)
+        }, completion: nil)
     }
     
     @IBAction func showKeyboard() { //called from app delegate or UIButton
@@ -70,7 +76,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
         
         
-        let rawFrame = value.CGRectValue()
+        let rawFrame = value.CGRectValue
         let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
         self.keyboardHeight = keyboardFrame.height
         
@@ -85,7 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         adPosition.constant = keyboardHeight
         
         if keyboardHidden {
-            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: { self.view.layoutIfNeeded() }, completion: nil)
         } else {
             self.view.layoutIfNeeded()
         }
@@ -101,7 +107,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if let color = notification.object as? UIColor {
             currentColor = color
             
-            for cell in tableView.visibleCells() {
+            for cell in tableView.visibleCells {
                 if let cell = cell as? EmojiCell {
                     cell.labelContainer.backgroundColor = color
                     cell.switchBackToDownloadButton()
@@ -111,14 +117,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateContentInset() {
-        var originalInsets = tableView.contentInset
         let contentInset = self.keyboardHeight + (adPosition.constant > 0 ? (adBanner.hidden ? 0 : 50) : 0)
         tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, contentInset, 0.0)
         tableView.scrollIndicatorInsets = tableView.contentInset
+        
+        //update frame of Open Keyboard popup
+        let screenHeight = UIScreen.mainScreen().bounds.height
+        let currentCenter = screenHeight / 2.0
+        let availableSpace = screenHeight - contentInset - 20.0
+        let availableCenter = availableSpace / 2.0
+        let centerOffset = -(currentCenter - availableCenter)
+    
+        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            self.openKeyboardPosition.constant = centerOffset
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
     }
     
     func showHelpPopup(notification: NSNotification) {
-        let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") as! UIViewController
+        let popup = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("help") 
         
         let nav = LightNavigation(rootViewController: popup)
         nav.navigationBar.translucent = false
@@ -162,21 +180,36 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
 
+    var isAnimatingPopup = false
+    
+    func showOpenKeyboardPopup() {
+        
+        if isAnimatingPopup { return }
+        isAnimatingPopup = true
+        
+        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [], animations: {
+            self.openKeyboardView.transform = CGAffineTransformIdentity
+        }, completion: nil)
+        
+        UIView.animateWithDuration(0.4, delay: 2.5, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+            self.openKeyboardView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        }, completion: { _ in
+            self.isAnimatingPopup = false
+        })
+        
+    }
     
     //pragma MARK: - emoji inputs and table
     
     @IBAction func hiddenInputReceived(sender: UITextField, forEvent event: UIEvent) {
-        let rawEmoji = sender.text
+        let rawEmoji = sender.text!
         var emoji = rawEmoji as NSString
         
-        if emoji.length == 0 || emoji.length == 1 {
+        let notEmoji = "abcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+,./;'[]\\<>?:\"{}|"
+        if notEmoji.containsString(rawEmoji.lowercaseString) {
             sender.text = ""
             //show an alert
-            let alert = UIAlertController(title: "Open the Emoji Keyboard", message: "😀😁😂😃😄😅😆😇", preferredStyle: .Alert)
-            let ok = UIAlertAction(title: "ok", style: .Default, handler: nil)
-            alert.addAction(ok)
-            self.presentViewController(alert, animated: true, completion: nil)
-            
+            showOpenKeyboardPopup()
             return
         }
         
@@ -184,7 +217,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let char2 = emoji.characterAtIndex(1)
             if char2 >= 57339 && char2 <= 57343
             { //is skin tone marker
-                emoji = sender.text.substringFromIndex(sender.text.endIndex.predecessor().predecessor()) as NSString
+                emoji = sender.text!.substringFromIndex(sender.text!.endIndex.predecessor().predecessor()) as NSString
             }
             
             if emoji.length % 4 == 0 && emoji.length > 4 { //flags stick together for some reason?
@@ -216,7 +249,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         //first is color picker title, then picker itself
         if indexPath.item == 0 {
-            return tableView.dequeueReusableCellWithIdentifier("backgroundTitle") as! UITableViewCell
+            return tableView.dequeueReusableCellWithIdentifier("backgroundTitle")!
         }
         
         if indexPath.item == 1 {
@@ -239,7 +272,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let aboutText = about[aboutIndex]
             
             if aboutText.text == "how to use Emojicon" {
-                return tableView.dequeueReusableCellWithIdentifier("instructions") as! UITableViewCell
+                return tableView.dequeueReusableCellWithIdentifier("instructions")!
             }
             
             cell.decorateCell(emoji: aboutText.emoji, text: aboutText.text, isLast: aboutText.text.hasSuffix("anywhere"))
@@ -292,7 +325,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if adPosition.constant != keyboardHeight {
             adPosition.constant = keyboardHeight
-            UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+            UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
                     self.view.layoutIfNeeded()
                 }, completion: { success in
                     self.updateContentInset()
@@ -303,14 +336,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         adPosition.constant = -banner.frame.height
-        UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: { success in
+        UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: { self.view.layoutIfNeeded() }, completion: { success in
                 self.updateContentInset()
         })
     }
     
     func keyboardHidden(hidden: Bool) {
         adPosition.constant = (hidden ? -adBanner.frame.height : keyboardHeight)
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: { self.view.layoutIfNeeded() }, completion: nil)
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: { self.view.layoutIfNeeded() }, completion: nil)
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {

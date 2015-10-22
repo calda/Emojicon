@@ -40,7 +40,7 @@ class CellPagingLayout : UICollectionViewFlowLayout {
         self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forItem: page, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -57,7 +57,7 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     
         let cellType = cellTypeForIndex(indexPath)
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellType, forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellType, forIndexPath: indexPath) 
         
         if cellType == "color" {
             cell.backgroundColor = colorForIndex(indexPath)
@@ -87,8 +87,6 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
     //pragma MARK: - User Interaction
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let index = indexPath.item
-        
         let cellType = cellTypeForIndex(indexPath)
         
         if cellType == "color" {
@@ -132,7 +130,7 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
         
         //animate
         clearLeading.constant = -self.frame.height
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: nil, animations: {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
             self.layoutIfNeeded()
             self.clearIcon.transform = CGAffineTransformMakeRotation(CGFloat(M_PI / 4.0))
             self.collectionView.contentOffset = newContentOffset
@@ -175,7 +173,7 @@ class ColorPickerCell : UITableViewCell, UICollectionViewDelegateFlowLayout, UIC
                 newContentOffset = collectionView.contentOffset
             }
             
-            UIView.animateWithDuration(0.45, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: nil, animations: {
+            UIView.animateWithDuration(0.45, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: [], animations: {
                 self.layoutIfNeeded()
                 self.clearIcon.transform = CGAffineTransformMakeRotation(0.0)
                 collectionView.contentOffset = newContentOffset
