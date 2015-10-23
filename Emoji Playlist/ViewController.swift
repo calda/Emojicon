@@ -124,7 +124,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         //update frame of Open Keyboard popup
         let screenHeight = UIScreen.mainScreen().bounds.height
         let currentCenter = screenHeight / 2.0
-        let availableSpace = screenHeight - contentInset - 20.0
+        let availableSpace = screenHeight - contentInset + 20.0
         let availableCenter = availableSpace / 2.0
         let centerOffset = -(currentCenter - availableCenter)
     
@@ -186,15 +186,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if isAnimatingPopup { return }
         isAnimatingPopup = true
+        self.openKeyboardView.alpha = 1.0
         
         UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [], animations: {
             self.openKeyboardView.transform = CGAffineTransformIdentity
         }, completion: nil)
         
         UIView.animateWithDuration(0.4, delay: 2.5, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
-            self.openKeyboardView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+            self.openKeyboardView.transform = CGAffineTransformMakeScale(0.0001, 0.0001)
         }, completion: { _ in
             self.isAnimatingPopup = false
+            self.openKeyboardView.alpha = 0.0
         })
         
     }
@@ -203,14 +205,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func hiddenInputReceived(sender: UITextField, forEvent event: UIEvent) {
         let rawEmoji = sender.text!
+        if rawEmoji == "" { return }
         var emoji = rawEmoji as NSString
         
-        let notEmoji = "abcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+,./;'[]\\<>?:\"{}|"
-        if notEmoji.containsString(rawEmoji.lowercaseString) {
-            sender.text = ""
-            //show an alert
-            showOpenKeyboardPopup()
-            return
+        let notEmoji = "abcdefghijklmnopqrstuvwxyz1234567890-=!@#$%^&*()_+,./;'[]\\<>?:\"{}| "
+        for character in rawEmoji.characters {
+            if notEmoji.containsString("\(character)".lowercaseString) {
+                sender.text = ""
+                //show an alert
+                showOpenKeyboardPopup()
+                return
+            }
         }
         
         if emoji.length > 1 {
@@ -239,7 +244,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if contentHeight > availableHeight {
             tableView.setContentOffset(CGPointMake(0, 0), animated: true)
         }
-        
         
         sender.text = ""
     }
