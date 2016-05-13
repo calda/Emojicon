@@ -25,7 +25,7 @@ class CellPagingLayout : UICollectionViewFlowLayout {
         super.init()
         self.scrollDirection = UICollectionViewScrollDirection.Horizontal
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "syncToPage:", name: SYNCHRONIZE_TO_PAGE_NOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CellPagingLayout.syncToPage(_:)), name: SYNCHRONIZE_TO_PAGE_NOTIFICATION, object: nil)
     }
     
     func syncToPage(notification: NSNotification) {

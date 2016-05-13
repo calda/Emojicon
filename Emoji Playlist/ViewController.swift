@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import iAd
 
 let EIShowHelpPopupNotification = "com.cal.emojicon.show-help-popup"
 let EIChangeColorNotification = "com.cal.emojicon.change-color"
 let EIShowKeyboardNotification = "com.cal.emojicon.show-keyboard"
 let EIHideAdNotification = "com.cal.emojicon.hide-ad"
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ADBannerViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var emojis : [String] = []
     var savedCells : [Int] = []
@@ -34,17 +33,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var showKeyboardButton: UIButton!
     @IBOutlet weak var openKeyboardView: UIView!
     @IBOutlet weak var openKeyboardPosition: NSLayoutConstraint!
+    var keyboardHeight : CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(hue: 0.0, saturation: 0.6, brightness: 0.8, alpha: 1.0)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChanged:", name: UIKeyboardDidChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showHelpPopup:", name: EIShowHelpPopupNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "colorChanged:", name: EIChangeColorNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard", name: EIShowKeyboardNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideAd", name: EIHideAdNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardChanged(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardChanged(_:)), name: UIKeyboardDidChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showHelpPopup(_:)), name: EIShowHelpPopupNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.colorChanged(_:)), name: EIChangeColorNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.showKeyboard), name: EIShowKeyboardNotification, object: nil)
         
         self.openKeyboardView.transform = CGAffineTransformMakeScale(0.01, 0.01)
         self.openKeyboardView.layer.cornerRadius = 20.0
@@ -59,13 +58,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func showKeyboard() { //called from app delegate or UIButton
         hiddenField.becomeFirstResponder()
         UIView.animateWithDuration(0.3, animations: {
-            self.adBanner.alpha = 1.0
             self.showKeyboardButton.alpha = 1.0
         })
     }
     
     func hideAd() {
-        self.adBanner.alpha = 0.0
         showKeyboardButton.alpha = 0.0
     }
     
@@ -81,14 +78,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.keyboardHeight = keyboardFrame.height
         
         updateContentInset()
-        
-        if !adBanner.bannerLoaded {
-            //ad is not on screen
-            keyboardHidden = false
-            return
-        }
-        
-        adPosition.constant = keyboardHeight
         
         if keyboardHidden {
             UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: { self.view.layoutIfNeeded() }, completion: nil)
@@ -117,7 +106,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateContentInset() {
-        let contentInset = self.keyboardHeight + (adPosition.constant > 0 ? (adBanner.hidden ? 0 : 50) : 0)
+        let contentInset = self.keyboardHeight
         tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, contentInset, 0.0)
         tableView.scrollIndicatorInsets = tableView.contentInset
         
@@ -146,7 +135,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             presentation.sourceView = source
         }
         
-        let closeButton = UIBarButtonItem(title: "got it", style: UIBarButtonItemStyle.Plain, target: self, action: "closeHelpPopup")
+        let closeButton = UIBarButtonItem(title: "got it", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(ViewController.closeHelpPopup))
         closeButton.tintColor = UIColor.whiteColor()
         popup.navigationItem.rightBarButtonItem = closeButton
         
@@ -157,12 +146,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         nav.modalPresentationStyle = UIModalPresentationStyle.Popover
         nav.modalPresentationCapturesStatusBarAppearance = true
         self.presentViewController(nav, animated: true, completion: nil)
-        self.keyboardHidden(true)
     }
     
     func closeHelpPopup() {
         self.dismissViewControllerAnimated(true, completion: nil)
-        self.adPosition.constant = -55
         self.view.layoutIfNeeded()
         keyboardHidden = true
         self.hiddenField.becomeFirstResponder()
@@ -237,9 +224,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         var availableHeight = self.view.frame.height - 20.0
         availableHeight -= keyboardHeight
-        if adPosition.constant > 0 {
-            availableHeight -= adBanner.frame.height
-        }
         
         if contentHeight > availableHeight {
             tableView.setContentOffset(CGPointMake(0, 0), animated: true)
@@ -311,54 +295,4 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return emojis.count + about.count + 2
     }
     
-    //pragma MARK: - ad delegate
-    
-    @IBOutlet weak var adBanner: ADBannerView!
-    @IBOutlet weak var adPosition: NSLayoutConstraint!
-    var keyboardHeight : CGFloat = 0
-    
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-        
-        //do not show ad if 4S (aspect != 9:16) (9/16 = 0.5625)
-        let aspect = self.view.frame.width / self.view.frame.height
-        if (aspect > 0.6 || aspect < 0.5) && (self.view.frame.height < 800.0) {
-            self.updateContentInset()
-            adBanner.hidden = true
-            return
-        }
-        
-        if adPosition.constant != keyboardHeight {
-            adPosition.constant = keyboardHeight
-            UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
-                    self.view.layoutIfNeeded()
-                }, completion: { success in
-                    self.updateContentInset()
-            })
-        }
-        
-    }
-    
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        adPosition.constant = -banner.frame.height
-        UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: { self.view.layoutIfNeeded() }, completion: { success in
-                self.updateContentInset()
-        })
-    }
-    
-    func keyboardHidden(hidden: Bool) {
-        adPosition.constant = (hidden ? -adBanner.frame.height : keyboardHeight)
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: { self.view.layoutIfNeeded() }, completion: nil)
-    }
-    
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
-        self.keyboardHidden(true)
-        return true
-    }
-    
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        self.adPosition.constant = -banner.frame.height
-        self.view.layoutIfNeeded()
-        self.hiddenField.becomeFirstResponder()
-    }
-
 }
