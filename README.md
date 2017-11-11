@@ -7,7 +7,7 @@ Parts of this codebase were adapted into [Emoji Names](http://github.com/calda/E
 ### Screenshots
 
 <p align="center">
-    <img src="images/1.PNG" width=200px> <img src="images/2.PNG" width=200px> <img src="images/3.PNG" width=200px>
+    <img src="images/1.PNG" width=250px> <img src="images/2.PNG" width=250px> <img src="images/3.PNG" width=250px>
 </p>
 
 <br>
@@ -15,7 +15,7 @@ Parts of this codebase were adapted into [Emoji Names](http://github.com/calda/E
 ### App Store marketing materials
 
 <p align="center">
-    <img src="images/app%20store%201.png" width=200px> <img src="images/app%20store%202.png" width=200px> <img src="images/app%20store%203.png" width=200px>
+    <img src="images/app%20store%201.png" width=250px> <img src="images/app%20store%202.png" width=250px> <img src="images/app%20store%203.png" width=250px>
 </p>
 
 
